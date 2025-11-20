@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- Background -->
+  <rect width="512" height="512" fill="#4CAF50" rx="64"/>
+  
+  <!-- Scale platform -->
+  <rect x="156" y="340" width="200" height="20" fill="#FFFFFF" rx="4"/>
+  
+  <!-- Scale base -->
+  <rect x="246" y="360" width="20" height="40" fill="#FFFFFF" rx="4"/>
+  
+  <!-- Weight display -->
+  <rect x="186" y="200" width="140" height="100" fill="#FFFFFF" rx="12"/>
+  
+  <!-- Digital numbers -->
+  <text x="256" y="265" font-family="Arial, sans-serif" font-size="48" font-weight="bold" fill="#4CAF50" text-anchor="middle">75</text>
+  
+  <!-- Down arrow (weight loss) -->
+  <g fill="#FFFFFF">
+    <!-- Arrow shaft -->
+    <rect x="246" y="80" width="20" height="100" rx="4"/>
+    <!-- Arrow head -->
+    <polygon points="256,190 226,150 286,150"/>
+  </g>
+  
+  <!-- kg label -->
+  <text x="256" y="430" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#FFFFFF" text-anchor="middle">kg</text>
+</svg>
