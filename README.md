@@ -126,8 +126,10 @@ Oliver freut sich über Feedback und Anregungen:
 
 ## 📄 Lizenz
 
-Dieses Projekt ist Open Source und kann frei verwendet werden.
+MIT License - siehe [LICENSE](LICENSE) Datei für Details.
+
+Dieses Projekt ist Open Source und kann frei verwendet, modifiziert und weiterverbreitet werden.
 
 ---
 
-**Version 1.0.0** | Made with ❤️ by Oliver
+**Version 1.0.0** | Made with ❤️ by Oliver | MIT License

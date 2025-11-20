@@ -1,3 +1,7 @@
+// Appnehmen - Weight Loss Tracking PWA
+// Copyright (c) 2025 Oliver Baltz
+// Licensed under the MIT License - see LICENSE file for details
+
 import 'package:flutter/material.dart';
 
 class InfoScreen extends StatelessWidget {
@@ -227,12 +231,32 @@ class InfoScreen extends StatelessWidget {
               ),
               const SizedBox(height: 32),
               Center(
-                child: Text(
-                  'Version 1.0.0',
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.grey[600],
-                  ),
+                child: Column(
+                  children: [
+                    Text(
+                      'Version 1.0.0',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.grey[600],
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      'MIT License © 2025 Oliver Baltz',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.grey[500],
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      'Open Source - Frei nutzbar',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.grey[500],
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],

@@ -1,3 +1,7 @@
+// Appnehmen - Weight Loss Tracking PWA
+// Copyright (c) 2025 Oliver Baltz
+// Licensed under the MIT License - see LICENSE file for details
+
 import 'package:flutter/material.dart';
 import 'services/storage_service.dart';
 import 'screens/onboarding_screen.dart';
