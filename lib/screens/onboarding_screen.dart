@@ -107,7 +107,7 @@ TextFormField(
                     ),
                     prefixIcon: const Icon(Icons.monitor_weight),
                   ),
-                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                  keyboardType: TextInputType.text,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Bitte gib dein aktuelles Gewicht ein';
@@ -131,7 +131,7 @@ TextFormField(
                     ),
                     prefixIcon: const Icon(Icons.flag),
                   ),
-                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                  keyboardType: TextInputType.text,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Bitte gib dein Wunschgewicht ein';

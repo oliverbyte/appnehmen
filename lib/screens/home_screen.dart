@@ -46,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             TextField(
               controller: weightController,
-              keyboardType: const TextInputType.numberWithOptions(decimal: true),
+              keyboardType: TextInputType.text,
               decoration: const InputDecoration(
                 labelText: 'Gewicht (kg)',
                 hintText: 'z.B. 75,5 oder 75.5',
