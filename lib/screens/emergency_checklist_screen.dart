@@ -104,7 +104,7 @@ class _EmergencyChecklistScreenState extends State<EmergencyChecklistScreen> {
                   _buildSubItem('✓ Tee (warm, Ingwer, Mate)', Colors.green),
                   _buildSubItem('✓ Sprudelwasser (mit Zitrone/Eiswürfeln)', Colors.green),
                   _buildSubItem('✓ Gemüsebrühe', Colors.green),
-                  _buildSubItem('❌ Cola (Koffein macht Heißhunger, Süßungsmittel fördern Schlafprobleme)', Colors.red),
+                  _buildSubItem('❌ Cola (Koffein → Schlafprobleme, Süßungsmittel → Heißhunger, Zucker → Zahnschmerzen & Abhängigkeit)', Colors.red),
                   _buildSubItem('❌ Alkohol (hemmt Abnahme)', Colors.red),
                 ],
               ),
