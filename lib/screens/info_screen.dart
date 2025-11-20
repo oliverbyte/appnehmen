@@ -3,6 +3,7 @@
 // Licensed under the MIT License - see LICENSE file for details
 
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class InfoScreen extends StatelessWidget {
   const InfoScreen({super.key});
@@ -291,6 +292,30 @@ class InfoScreen extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 12,
                         color: Colors.grey[500],
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    InkWell(
+                      onTap: () async {
+                        final url = Uri.parse('https://github.com/oliverbyte/appnehmen');
+                        if (await canLaunchUrl(url)) {
+                          await launchUrl(url, mode: LaunchMode.externalApplication);
+                        }
+                      },
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(Icons.code, size: 16, color: Colors.blue[700]),
+                          const SizedBox(width: 6),
+                          Text(
+                            'github.com/oliverbyte/appnehmen',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.blue[700],
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
