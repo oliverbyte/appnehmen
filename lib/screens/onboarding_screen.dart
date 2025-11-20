@@ -32,10 +32,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   Future<void> _saveAndContinue() async {
     if (_formKey.currentState!.validate()) {
+      // Convert German comma to decimal point
+      final currentWeight = double.parse(_currentWeightController.text.replaceAll(',', '.'));
+      final targetWeight = double.parse(_targetWeightController.text.replaceAll(',', '.'));
+      
       await _storageService.saveUserData(
         name: _nameController.text,
-        currentWeight: double.parse(_currentWeightController.text),
-        targetWeight: double.parse(_targetWeightController.text),
+        currentWeight: currentWeight,
+        targetWeight: targetWeight,
         why: _whyController.text,
       );
 
@@ -93,42 +97,48 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   },
                 ),
                 const SizedBox(height: 20),
-                TextFormField(
+TextFormField(
                   controller: _currentWeightController,
                   decoration: InputDecoration(
                     labelText: 'Aktuelles Gewicht (kg)',
+                    hintText: 'z.B. 75,5 oder 75.5',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
                     prefixIcon: const Icon(Icons.monitor_weight),
                   ),
-                  keyboardType: TextInputType.number,
+                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Bitte gib dein aktuelles Gewicht ein';
                     }
-                    if (double.tryParse(value) == null) {
+                    // Convert German comma to decimal point for validation
+                    final normalizedValue = value.replaceAll(',', '.');
+                    if (double.tryParse(normalizedValue) == null) {
                       return 'Bitte gib eine gültige Zahl ein';
                     }
                     return null;
                   },
                 ),
                 const SizedBox(height: 20),
-                TextFormField(
+TextFormField(
                   controller: _targetWeightController,
                   decoration: InputDecoration(
                     labelText: 'Wunschgewicht (kg)',
+                    hintText: 'z.B. 65,0 oder 65.0',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
                     prefixIcon: const Icon(Icons.flag),
                   ),
-                  keyboardType: TextInputType.number,
+                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Bitte gib dein Wunschgewicht ein';
                     }
-                    if (double.tryParse(value) == null) {
+                    // Convert German comma to decimal point for validation
+                    final normalizedValue = value.replaceAll(',', '.');
+                    if (double.tryParse(normalizedValue) == null) {
                       return 'Bitte gib eine gültige Zahl ein';
                     }
                     return null;
