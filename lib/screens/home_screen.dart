@@ -209,10 +209,80 @@ class _HomeScreenState extends State<HomeScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Icon(
-                    Icons.fitness_center,
-                    size: 48,
-                    color: Colors.white,
+                  Container(
+                    width: 56,
+                    height: 56,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Stack(
+                      children: [
+                        // Bathroom scale base
+                        Positioned(
+                          left: 10,
+                          right: 10,
+                          bottom: 10,
+                          height: 22,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.green[700],
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                          ),
+                        ),
+                        // Display screen
+                        Positioned(
+                          left: 14,
+                          right: 14,
+                          bottom: 14,
+                          height: 10,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.green[100],
+                              borderRadius: BorderRadius.circular(2),
+                            ),
+                          ),
+                        ),
+                        // Big down arrow
+                        Positioned(
+                          left: 18,
+                          right: 18,
+                          top: 6,
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Container(
+                                width: 8,
+                                height: 16,
+                                decoration: BoxDecoration(
+                                  color: Colors.green[700],
+                                  borderRadius: BorderRadius.circular(2),
+                                ),
+                              ),
+                              Icon(
+                                Icons.arrow_drop_down,
+                                size: 20,
+                                color: Colors.green[700],
+                              ),
+                            ],
+                          ),
+                        ),
+                        // Minus symbol on arrow
+                        Positioned(
+                          left: 22,
+                          right: 22,
+                          top: 12,
+                          child: Container(
+                            height: 3,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(1),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                   const SizedBox(height: 12),
                   Text(
