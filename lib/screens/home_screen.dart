@@ -116,11 +116,11 @@ class _HomeScreenState extends State<HomeScreen> {
     final result = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Mein Warum bearbeiten'),
+        title: const Text('Dein Warum bearbeiten'),
         content: TextField(
           controller: whyController,
           decoration: const InputDecoration(
-            labelText: 'Mein Warum',
+            labelText: 'Dein Warum',
             hintText: 'Warum möchtest du abnehmen?',
             border: OutlineInputBorder(),
             prefixIcon: Icon(Icons.favorite),
@@ -162,7 +162,7 @@ class _HomeScreenState extends State<HomeScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: const Text('Mein Warum wurde aktualisiert'),
+            content: const Text('Dein Warum wurde aktualisiert'),
             backgroundColor: Colors.purple[600],
             behavior: SnackBarBehavior.floating,
           ),
@@ -335,7 +335,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         const SizedBox(width: 8),
                         Expanded(
                           child: Text(
-                            'Mein Warum',
+                            'Dein Warum',
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,

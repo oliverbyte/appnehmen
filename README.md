@@ -7,7 +7,7 @@ Eine Progressive Web App (PWA) zur Unterstützung beim Abnehmen – mit lokaler 
 **Appnehmen** ist eine minimalistische PWA, die dir mit einfachen aber wirksamen Werkzeugen beim Abnehmen hilft:
 
 - 📊 **Gewichtsverfolgung**: Verfolge deinen Fortschritt mit grafischer Auswertung
-- 💪 **Mein Warum**: Bleib motiviert durch dein persönliches "Warum"
+- 💪 **Dein Warum**: Bleib motiviert durch dein persönliches "Warum"
 - 🚨 **Heißhunger-Notfall**: Strukturierte Hilfe bei akuten Heißhunger-Momenten
 - 🔒 **100% Privat**: Alle Daten bleiben lokal auf deinem Gerät
 
@@ -53,7 +53,7 @@ Oliver hat selbst 45 Kilos abgenommen und teilt mit dieser App die kleinen aber 
 ### Startseite
 - Übersicht über aktuelles Gewicht, Wunschgewicht und verbleibende Kilos
 - Schnellzugriff auf alle Hauptfunktionen
-- Editierbare Motivation ("Mein Warum")
+- Editierbare Motivation ("Dein Warum")
 
 ### Gewichtsverfolgung
 - Eingabe neuer Gewichtsmessungen (mit deutscher Komma-Unterstützung: 75,5 kg)

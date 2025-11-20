@@ -138,7 +138,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 TextFormField(
                   controller: _whyController,
                   decoration: InputDecoration(
-                    labelText: 'Mein Warum',
+                    labelText: 'Dein Warum',
                     hintText: 'Warum möchtest du abnehmen?',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
