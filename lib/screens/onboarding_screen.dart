@@ -102,14 +102,48 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   decoration: InputDecoration(
                     labelText: 'Aktuelles Gewicht (kg)',
                     hintText: 'z.B. 75,5',
-                    border: OutlineInputBorder(,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    prefixIcon: const Icon(Icons.monitor_weight),
+                  ),
+                  keyboardType: TextInputType.text,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Bitte gib dein aktuelles Gewicht ein';
+                    }
+                    // Convert German comma to decimal point for validation
+                    final normalizedValue = value.replaceAll(',', '.');
+                    if (double.tryParse(normalizedValue) == null) {
+                      return 'Bitte gib eine gültige Zahl ein';
+                    }
+                    return null;
+                  },
+                ),
                 const SizedBox(height: 20),
                 TextFormField(
                   controller: _targetWeightController,
                   decoration: InputDecoration(
                     labelText: 'Wunschgewicht (kg)',
                     hintText: 'z.B. 65,0',
-                    border: OutlineInputBorder(,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    prefixIcon: const Icon(Icons.flag),
+                  ),
+                  keyboardType: TextInputType.text,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Bitte gib dein Wunschgewicht ein';
+                    }
+                    // Convert German comma to decimal point for validation
+                    final normalizedValue = value.replaceAll(',', '.');
+                    if (double.tryParse(normalizedValue) == null) {
+                      return 'Bitte gib eine gültige Zahl ein';
+                    }
+                    return null;
+                  },
+                ),
                 const SizedBox(height: 20),
                 TextFormField(
                   controller: _whyController,

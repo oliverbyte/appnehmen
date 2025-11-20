@@ -172,6 +172,43 @@ class InfoScreen extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
+                  color: Colors.amber[50],
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: Colors.amber[200]!),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(Icons.info_outline, color: Colors.amber[700], size: 28),
+                        const SizedBox(width: 12),
+                        Text(
+                          'Wichtiger Hinweis',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.amber[900],
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      'Ich bin kein Arzt, Ernährungsberater oder ähnlich qualifiziert. Die Inhalte dieser App basieren ausschließlich auf meinen persönlichen Erfahrungen. Bei gesundheitlichen Fragen oder Unsicherheiten konsultiere bitte einen Fachmann.',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.amber[800],
+                        height: 1.6,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 24),
+              Container(
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
                   color: Colors.orange[50],
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(color: Colors.orange[200]!),

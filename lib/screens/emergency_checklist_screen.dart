@@ -102,9 +102,9 @@ class _EmergencyChecklistScreenState extends State<EmergencyChecklistScreen> {
                 onToggle: () => setState(() => _step1Complete = !_step1Complete),
                 items: [
                   _buildSubItem('✓ Tee (warm, Ingwer, Mate)', Colors.green),
-                  _buildSubItem('✓ Gemüsebrühe', Colors.green),
                   _buildSubItem('✓ Sprudelwasser (mit Zitrone/Eiswürfeln)', Colors.green),
-                  _buildSubItem('❌ Cola (Koffein, Säure)', Colors.red),
+                  _buildSubItem('✓ Gemüsebrühe', Colors.green),
+                  _buildSubItem('❌ Cola (Koffein macht Heißhunger, Süßungsmittel fördern Schlafprobleme)', Colors.red),
                   _buildSubItem('❌ Alkohol (hemmt Abnahme)', Colors.red),
                 ],
               ),
@@ -118,10 +118,24 @@ class _EmergencyChecklistScreenState extends State<EmergencyChecklistScreen> {
                 isComplete: _step2Complete,
                 onToggle: () => setState(() => _step2Complete = !_step2Complete),
                 items: [
-                  _buildSubItem('• Kaltes Wasser über Hände', Colors.blue),
-                  _buildSubItem('• Zähneputzen mit Minze', Colors.blue),
-                  _buildSubItem('• Kaugummi ohne Zucker', Colors.blue),
-                  _buildSubItem('• Jemandem schreiben', Colors.blue),
+                  _buildSubItem('✓ Kaltes Wasser über Hände', Colors.green),
+                  _buildSubItem('✓ Zähneputzen mit Minze', Colors.green),
+                  _buildSubItem('✓ Kaugummi ohne Zucker', Colors.green),
+                  _buildSubItem('✓ Jemandem schreiben', Colors.green),
+                ],
+              ),
+              
+              const SizedBox(height: 20),
+              
+              // Step 3: Bewegen
+              _buildStep(
+                number: '3',
+                title: 'Bewegen',
+                isComplete: _step3Complete,
+                onToggle: () => setState(() => _step3Complete = !_step3Complete),
+                items: [
+                  _buildSubItem('✓ 1-3 Min Kniebeugen', Colors.green),
+                  _buildSubItem('✓ Treppe laufen', Colors.green),
                 ],
               ),
               
@@ -158,7 +172,7 @@ class _EmergencyChecklistScreenState extends State<EmergencyChecklistScreen> {
                     const SizedBox(height: 12),
                     if (!_timerStarted)
                       ElevatedButton.icon(
-                        onPressed: _step1Complete && _step2Complete ? _startTimer : null,
+                        onPressed: _step1Complete && _step2Complete && _step3Complete ? _startTimer : null,
                         icon: const Icon(Icons.play_arrow),
                         label: const Text('Timer starten'),
                         style: ElevatedButton.styleFrom(
@@ -171,20 +185,6 @@ class _EmergencyChecklistScreenState extends State<EmergencyChecklistScreen> {
                       Icon(Icons.check_circle, size: 48, color: Colors.green[600]),
                   ],
                 ),
-              ),
-              
-              const SizedBox(height: 20),
-              
-              // Step 3: Bewegen
-              _buildStep(
-                number: '3',
-                title: 'Bewegen',
-                isComplete: _step3Complete,
-                onToggle: () => setState(() => _step3Complete = !_step3Complete),
-                items: [
-                  _buildSubItem('• 1-3 Min Kniebeugen', Colors.purple),
-                  _buildSubItem('• Treppe laufen', Colors.purple),
-                ],
               ),
               
               const SizedBox(height: 20),
@@ -308,6 +308,19 @@ class _EmergencyChecklistScreenState extends State<EmergencyChecklistScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: items,
+            ),
+          ),
+          const SizedBox(height: 12),
+          Padding(
+            padding: const EdgeInsets.only(left: 52),
+            child: ElevatedButton(
+              onPressed: onToggle,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: isComplete ? Colors.green[600] : Colors.blue[600],
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              ),
+              child: Text(isComplete ? '✓ Erledigt' : 'Als erledigt markieren'),
             ),
           ),
         ],
