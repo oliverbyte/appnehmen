@@ -19,7 +19,7 @@ Oliver hat selbst 45 Kilos abgenommen und teilt mit dieser App die kleinen aber 
 
 ### Als PWA auf dem Smartphone
 
-1. Öffne die App im Browser: **[https://o.baltz.github.io/appnehmen](https://o.baltz.github.io/appnehmen)**
+1. Öffne die App im Browser: **[https://oliverbyte.github.io/appnehmen](https://oliverbyte.github.io/appnehmen)**
 
 2. **Auf iOS (iPhone/iPad)**:
    - Tippe auf das Teilen-Symbol (□↑)
@@ -88,8 +88,9 @@ Oliver hat selbst 45 Kilos abgenommen und teilt mit dieser App die kleinen aber 
 flutter channel stable
 flutter upgrade
 
+```bash
 # Repository klonen
-git clone https://github.com/o.baltz/appnehmen.git
+git clone https://github.com/oliverbyte/appnehmen.git
 cd appnehmen
 
 # Dependencies installieren
