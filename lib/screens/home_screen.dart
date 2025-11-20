@@ -54,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
               keyboardType: TextInputType.text,
               decoration: const InputDecoration(
                 labelText: 'Gewicht (kg)',
-                hintText: 'z.B. 75,5 oder 75.5',
+                hintText: 'z.B. 75,5',
                 border: OutlineInputBorder(),
                 prefixIcon: Icon(Icons.monitor_weight),
               ),
