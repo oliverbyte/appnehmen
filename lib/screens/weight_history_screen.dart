@@ -7,6 +7,11 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:intl/intl.dart';
 import '../services/storage_service.dart';
 
+// Helper function to format numbers with German comma
+String _formatGermanNumber(double number, int decimalPlaces) {
+  return number.toStringAsFixed(decimalPlaces).replaceAll('.', ',');
+}
+
 class WeightHistoryScreen extends StatefulWidget {
   const WeightHistoryScreen({super.key});
 
@@ -208,7 +213,7 @@ class _WeightHistoryScreenState extends State<WeightHistoryScreen> {
         Expanded(
           child: _buildStatCard(
             'Startgewicht',
-            '${startWeight.toStringAsFixed(1)} kg',
+            '${_formatGermanNumber(startWeight, 1)} kg',
             Icons.play_arrow,
             Colors.grey,
           ),
@@ -217,7 +222,7 @@ class _WeightHistoryScreenState extends State<WeightHistoryScreen> {
         Expanded(
           child: _buildStatCard(
             'Aktuell',
-            '${currentWeight.toStringAsFixed(1)} kg',
+            '${_formatGermanNumber(currentWeight, 1)} kg',
             Icons.monitor_weight,
             Colors.blue,
           ),
@@ -226,7 +231,7 @@ class _WeightHistoryScreenState extends State<WeightHistoryScreen> {
         Expanded(
           child: _buildStatCard(
             weightLoss >= 0 ? 'Verloren' : 'Zugenommen',
-            '${weightLoss.abs().toStringAsFixed(1)} kg',
+            '${_formatGermanNumber(weightLoss.abs(), 1)} kg',
             weightLoss >= 0 ? Icons.trending_down : Icons.trending_up,
             weightLoss >= 0 ? Colors.green : Colors.red,
           ),
@@ -303,7 +308,7 @@ class _WeightHistoryScreenState extends State<WeightHistoryScreen> {
                       ),
                       if (!isFirst)
                         Text(
-                          change >= 0 ? '+${change.toStringAsFixed(1)} kg' : '${change.toStringAsFixed(1)} kg',
+                          change >= 0 ? '+${_formatGermanNumber(change, 1)} kg' : '${_formatGermanNumber(change, 1)} kg',
                           style: TextStyle(
                             fontSize: 12,
                             color: change >= 0 ? Colors.red[600] : Colors.green[600],
@@ -313,7 +318,7 @@ class _WeightHistoryScreenState extends State<WeightHistoryScreen> {
                   ),
                 ),
                 Text(
-                  '${entry.weight.toStringAsFixed(1)} kg',
+                  '${_formatGermanNumber(entry.weight, 1)} kg',
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,

@@ -8,6 +8,11 @@ import 'emergency_checklist_screen.dart';
 import 'weight_history_screen.dart';
 import 'info_screen.dart';
 
+// Helper function to format numbers with German comma
+String _formatGermanNumber(double number, int decimalPlaces) {
+  return number.toStringAsFixed(decimalPlaces).replaceAll('.', ',');
+}
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -57,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const SizedBox(height: 12),
             Text(
-              'Dein aktuelles Gewicht: ${_userData!['currentWeight']} kg',
+              'Dein aktuelles Gewicht: ${_formatGermanNumber(_userData!['currentWeight'] as double, 1)} kg',
               style: TextStyle(fontSize: 14, color: Colors.grey[600]),
             ),
           ],
@@ -101,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Gewicht gespeichert: ${weight.toStringAsFixed(1)} kg'),
+            content: Text('Gewicht gespeichert: ${_formatGermanNumber(weight, 1)} kg'),
             backgroundColor: Colors.green[600],
             behavior: SnackBarBehavior.floating,
           ),
@@ -299,7 +304,7 @@ class _HomeScreenState extends State<HomeScreen> {
               _buildInfoCard(
                 icon: Icons.monitor_weight,
                 title: 'Aktuelles Gewicht',
-                value: '${_userData!['currentWeight']} kg',
+                value: '${_formatGermanNumber(_userData!['currentWeight'] as double, 1)} kg',
                 color: Colors.blue,
                 onTap: _showAddWeightDialog,
                 trailingIcon: Icons.edit,
@@ -308,14 +313,14 @@ class _HomeScreenState extends State<HomeScreen> {
               _buildInfoCard(
                 icon: Icons.flag,
                 title: 'Wunschgewicht',
-                value: '${_userData!['targetWeight']} kg',
+                value: '${_formatGermanNumber(_userData!['targetWeight'] as double, 1)} kg',
                 color: Colors.green,
               ),
               const SizedBox(height: 16),
               _buildInfoCard(
                 icon: Icons.trending_down,
                 title: 'Noch zu verlieren',
-                value: '${_weightToLose.toStringAsFixed(1)} kg',
+                value: '${_formatGermanNumber(_weightToLose, 1)} kg',
                 color: Colors.orange,
               ),
               const SizedBox(height: 24),
