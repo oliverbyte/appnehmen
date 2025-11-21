@@ -4,6 +4,7 @@
 
 import 'package:flutter/material.dart';
 import '../services/storage_service.dart';
+import '../widgets/install_banner.dart';
 import 'emergency_checklist_screen.dart';
 import 'weight_history_screen.dart';
 import 'info_screen.dart';
@@ -371,13 +372,27 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              // Header
-              Container(
+      body: Column(
+        children: [
+          // Install banner at the top
+          const InstallBanner(),
+          // Main content
+          Expanded(
+            child: _buildMainContent(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildMainContent() {
+    return SafeArea(
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            // Header
+            Container(
                 padding: const EdgeInsets.all(24),
                 decoration: BoxDecoration(
                   color: Colors.green[700],
@@ -407,12 +422,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                 ),
-              ),
-              
-              const SizedBox(height: 24),
-              
-              // Dein Warum - ganz oben
-              Padding(
+            ),
+            
+            const SizedBox(height: 24),
+            
+            // Dein Warum - ganz oben
+            Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Container(
                   padding: const EdgeInsets.all(20),
@@ -457,12 +472,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                 ),
-              ),
-              
-              const SizedBox(height: 24),
-              
-              // 3 Hauptbereiche
-              Padding(
+            ),
+            
+            const SizedBox(height: 24),
+            
+            // 3 Hauptbereiche
+            Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Column(
                   children: [
@@ -559,17 +574,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         textAlign: TextAlign.center,
                       ),
                     ),
-                    
-                    
                     const SizedBox(height: 24),
                   ],
                 ),
               ),
             ],
-          ),
-        ),
-      ),
-    );
+          )
+        )
+      );
   }
 
   Widget _buildMainSection({

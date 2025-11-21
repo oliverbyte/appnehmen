@@ -90,6 +90,7 @@ class StorageService {
   static const String _keyHabits = 'habits';
   static const String _keyHabitCompletions = 'habit_completions';
   static const String _keyHabitsInitialized = 'habits_initialized';
+  static const String _keyInstallPromptSeen = 'install_prompt_seen';
 
   Future<void> saveUserData({
     required String name,
@@ -326,5 +327,17 @@ class StorageService {
     }
     
     return habits.isNotEmpty;
+  }
+
+  // ============ INSTALL PROMPT METHODS ============
+
+  Future<bool> hasSeenInstallPrompt() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool(_keyInstallPromptSeen) ?? false;
+  }
+
+  Future<void> setInstallPromptSeen() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(_keyInstallPromptSeen, true);
   }
 }
