@@ -75,14 +75,16 @@ class UpdateManager {
 
     console.log('Applying update - activating new version...');
     
-    // Send message to new Service Worker to activate immediately
-    this.waitingWorker.postMessage({ type: 'SKIP_WAITING' });
-
-    // Wait for controller change, then reload
-    navigator.serviceWorker.addEventListener('controllerchange', () => {
+    // Register controller change handler BEFORE sending skip waiting
+    const handleControllerChange = () => {
       console.log('New app version active - reloading page...');
       window.location.reload();
-    });
+    };
+    
+    navigator.serviceWorker.addEventListener('controllerchange', handleControllerChange, { once: true });
+
+    // Send message to new Service Worker to activate immediately
+    this.waitingWorker.postMessage({ type: 'SKIP_WAITING' });
   }
 
   // Trigger manual update check
