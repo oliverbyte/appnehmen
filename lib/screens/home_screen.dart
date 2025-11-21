@@ -648,7 +648,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     
                     const SizedBox(height: 20),
                     
-                    // 3. Heißhunger-Notfall
+                    // 3. Cravings Emergency
                     _buildMainSectionWithSubtext(
                       icon: Icons.sos,
                       title: 'Heißhunger-Notfall',

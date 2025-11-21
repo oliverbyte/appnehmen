@@ -145,7 +145,7 @@ class _HabitsScreenState extends State<HabitsScreen> {
           ? const Center(child: CircularProgressIndicator())
           : Column(
               children: [
-                // Wochenübersicht
+                // Week overview
                 _buildWeekOverview(),
                 const Divider(height: 1),
                 // Heutige Gewohnheiten

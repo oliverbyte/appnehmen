@@ -68,7 +68,7 @@ class UpdateManager {
     });
   }
 
-  // Manuelles Update auslösen
+  // Trigger manual update
   async checkForUpdates() {
     if (this.registration) {
       await this.registration.update();
@@ -76,5 +76,5 @@ class UpdateManager {
   }
 }
 
-// Global verfügbar machen
+// Make globally available
 window.updateManager = new UpdateManager();

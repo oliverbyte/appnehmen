@@ -22,7 +22,7 @@ class Habit {
   final String id;
   final String name;
   final String description;
-  final bool isDefault;  // Kann nicht gelöscht werden wenn true
+  final bool isDefault;  // Cannot be deleted if true
 
   Habit({
     required this.id,
@@ -245,7 +245,7 @@ class StorageService {
     final jsonList = habits.map((h) => h.toJson()).toList();
     await prefs.setString(_keyHabits, jsonEncode(jsonList));
     
-    // Lösche auch alle Completions für dieses Habit
+    // Also delete all completions for this habit
     final completions = await getHabitCompletions();
     completions.removeWhere((c) => c.habitId == habitId);
     final completionJsonList = completions.map((c) => c.toJson()).toList();
