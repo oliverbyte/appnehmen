@@ -93,5 +93,6 @@ class UpdateManager {
   }
 }
 
-// Make globally available
+// Make globally available and initialize
 window.updateManager = new UpdateManager();
+window.updateManager.init();
