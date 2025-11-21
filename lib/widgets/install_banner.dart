@@ -1,7 +1,3 @@
-// Appnehmen - Weight Loss Tracking PWA
-// Copyright (c) 2025 Oliver Byte
-// Licensed under the MIT License - see LICENSE file for details
-
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import '../services/storage_service.dart';
@@ -74,13 +70,13 @@ class _InstallBannerState extends State<InstallBanner> {
                 });
               },
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
                 child: Row(
                   children: [
                     const Icon(
                       Icons.download_rounded,
                       color: Colors.white,
-                      size: 24,
+                      size: 26,
                     ),
                     const SizedBox(width: 12),
                     Expanded(

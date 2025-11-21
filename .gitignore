@@ -44,3 +44,6 @@ app.*.map.json
 
 .metadata
 test
+
+# Auto-generated commit ID
+lib/config/commit_id.dart

@@ -14,7 +14,7 @@ Eine Progressive Web App (PWA) zur Unterstützung beim Abnehmen – mit lokaler 
 
 ### Entstehungsgeschichte
 
-Oliver hat selbst 45 Kilos abgenommen und teilt mit dieser App die kleinen aber wirksamen Alltagswerkzeuge, die ihm dabei geholfen haben. Dies ist ein Freizeitprojekt ohne kommerzielles Interesse.
+Olli hat selbst 45 Kilos abgenommen und teilt mit dieser App die kleinen aber wirksamen Alltagswerkzeuge, die ihm dabei geholfen haben. Dies ist ein Freizeitprojekt ohne kommerzielles Interesse.
 
 ## 🚀 Installation
 
@@ -132,7 +132,7 @@ flutter build web --release
 
 ## 📧 Feedback & Kontakt
 
-Oliver freut sich über Feedback und Anregungen:
+Olli freut sich über Feedback und Anregungen:
 
 **E-Mail**: info@oliverbyte.de
 
@@ -146,4 +146,4 @@ Dieses Projekt ist Open Source und kann frei verwendet, modifiziert und weiterve
 
 ---
 
-**Version 1.1.0** | Made with ❤️ by Oliver | MIT License
+**Version 1.1.0** | Made with ❤️ by Olli | MIT License

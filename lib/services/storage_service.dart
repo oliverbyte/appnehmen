@@ -1,7 +1,3 @@
-// Appnehmen - Weight Loss Tracking PWA
-// Copyright (c) 2025 Oliver Byte
-// Licensed under the MIT License - see LICENSE file for details
-
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 

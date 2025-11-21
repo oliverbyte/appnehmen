@@ -1,9 +1,6 @@
-// Appnehmen - Weight Loss Tracking PWA
-// Copyright (c) 2025 Oliver Byte
-// Licensed under the MIT License - see LICENSE file for details
-
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../config/commit_id.dart';
 
 class InfoScreen extends StatelessWidget {
   const InfoScreen({super.key});
@@ -71,11 +68,10 @@ class InfoScreen extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 16),
-                    Text(
-                      'Oliver hat selbst 45 Kilos abgenommen – mit Hilfe von kilos-verlasst-mich.de (Danke an Melli!) – und will gerne mit diesen kleinen aber wirksamen Alltagswerkzeugen anderen helfen, dasselbe zu erreichen.',
+                    const Text(
+                      'Olli hat selbst 45 Kilos abgenommen – mit Hilfe von kilos-verlasst-mich.de (Danke an Melli!) – und will gerne mit diesen kleinen aber wirksamen Alltagswerkzeugen anderen helfen, dasselbe zu erreichen.',
                       style: TextStyle(
                         fontSize: 16,
-                        color: Colors.green[800],
                         height: 1.6,
                       ),
                     ),
@@ -86,48 +82,47 @@ class InfoScreen extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: Colors.blue[50],
+                  color: Colors.green[50],
                   borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: Colors.blue[200]!),
+                  border: Border.all(color: Colors.green[200]!),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       children: [
-                        Icon(Icons.star, color: Colors.blue[700], size: 28),
+                        Icon(Icons.star, color: Colors.green[700], size: 28),
                         const SizedBox(width: 12),
                         Text(
                           'Die Motivation',
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
-                            color: Colors.blue[900],
+                            color: Colors.green[900],
                           ),
                         ),
                       ],
                     ),
                     const SizedBox(height: 16),
-                    Text(
+                    const Text(
                       'Abnehmen ist eine persönliche Reise. Diese App bietet dir einfache, aber effektive Werkzeuge für deinen Alltag:',
                       style: TextStyle(
                         fontSize: 16,
-                        color: Colors.blue[800],
                         height: 1.6,
                       ),
                     ),
                     const SizedBox(height: 12),
                     _buildBulletPoint(
                       '📊 Verfolge deinen Fortschritt',
-                      Colors.blue,
+                      Colors.green,
                     ),
                     _buildBulletPoint(
                       '💪 Bleib motiviert mit deinem "Warum"',
-                      Colors.blue,
+                      Colors.green,
                     ),
                     _buildBulletPoint(
                       '🚨 Bewältige Heißhunger-Momente',
-                      Colors.blue,
+                      Colors.green,
                     ),
                   ],
                 ),
@@ -158,11 +153,10 @@ class InfoScreen extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 16),
-                    Text(
+                    const Text(
                       'Alle deine Daten werden ausschließlich lokal auf deinem Gerät gespeichert. Es werden keine Informationen an Server übertragen oder mit Dritten geteilt.',
                       style: TextStyle(
                         fontSize: 16,
-                        color: Colors.purple[800],
                         height: 1.6,
                       ),
                     ),
@@ -195,11 +189,10 @@ class InfoScreen extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 16),
-                    Text(
+                    const Text(
                       'Ich bin kein Arzt, Ernährungsberater oder ähnlich qualifiziert. Die Inhalte dieser App basieren ausschließlich auf meinen persönlichen Erfahrungen. Bei gesundheitlichen Fragen oder Unsicherheiten konsultiere bitte einen Fachmann.',
                       style: TextStyle(
                         fontSize: 16,
-                        color: Colors.amber[800],
                         height: 1.6,
                       ),
                     ),
@@ -232,11 +225,10 @@ class InfoScreen extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 16),
-                    Text(
-                      'Oliver freut sich jederzeit über Feedback und Anregungen via E-Mail:',
+                    const Text(
+                      'Olli freut sich jederzeit über Feedback und Anregungen via E-Mail:',
                       style: TextStyle(
                         fontSize: 16,
-                        color: Colors.orange[800],
                         height: 1.6,
                       ),
                     ),
@@ -261,7 +253,7 @@ class InfoScreen extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 14,
                         fontStyle: FontStyle.italic,
-                        color: Colors.orange[700],
+                        color: Colors.grey[600],
                       ),
                     ),
                   ],
@@ -272,9 +264,10 @@ class InfoScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     Text(
-                      'Version 1.0.0',
+                      'Commit: $appCommitId',
                       style: TextStyle(
-                        fontSize: 14,
+                        fontSize: 12,
+                        fontFamily: 'monospace',
                         color: Colors.grey[600],
                       ),
                     ),
@@ -336,9 +329,8 @@ class InfoScreen extends StatelessWidget {
         children: [
           Text(
             text,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 15,
-              color: color[800],
               height: 1.5,
             ),
           ),

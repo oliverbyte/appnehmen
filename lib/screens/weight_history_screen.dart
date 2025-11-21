@@ -1,7 +1,3 @@
-// Appnehmen - Weight Loss Tracking PWA
-// Copyright (c) 2025 Oliver Byte
-// Licensed under the MIT License - see LICENSE file for details
-
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:intl/intl.dart';
@@ -53,7 +49,7 @@ class _WeightHistoryScreenState extends State<WeightHistoryScreen> {
       return Scaffold(
         appBar: AppBar(
           title: const Text('Gewichtsverlauf'),
-          backgroundColor: Colors.blue[700],
+          backgroundColor: Colors.green[700],
           foregroundColor: Colors.white,
         ),
         body: Center(
@@ -170,12 +166,12 @@ class _WeightHistoryScreenState extends State<WeightHistoryScreen> {
                             .map((e) => FlSpot(e.key.toDouble(), e.value.weight))
                             .toList(),
                         isCurved: true,
-                        color: Colors.blue[600],
+                        color: Colors.green[600],
                         barWidth: 3,
                         dotData: const FlDotData(show: true),
                         belowBarData: BarAreaData(
                           show: true,
-                          color: Colors.blue[100]!.withValues(alpha: 0.3),
+                          color: Colors.green[100]!.withValues(alpha: 0.3),
                         ),
                       ),
                       if (_targetWeight != null)
@@ -224,7 +220,7 @@ class _WeightHistoryScreenState extends State<WeightHistoryScreen> {
             'Aktuell',
             '${_formatGermanNumber(currentWeight, 1)} kg',
             Icons.monitor_weight,
-            Colors.blue,
+            Colors.green,
           ),
         ),
         const SizedBox(width: 12),

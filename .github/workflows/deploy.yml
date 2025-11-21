@@ -30,6 +30,11 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
+      - name: Generate commit ID constant
+        run: |
+          COMMIT_ID=$(git rev-parse --short HEAD)
+          echo "const String appCommitId = '$COMMIT_ID';" > lib/config/commit_id.dart
+
       - name: Build web
         run: flutter build web --release --base-href "/appnehmen/"
 

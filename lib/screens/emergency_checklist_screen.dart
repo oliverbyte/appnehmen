@@ -1,7 +1,3 @@
-// Appnehmen - Weight Loss Tracking PWA
-// Copyright (c) 2025 Oliver Byte
-// Licensed under the MIT License - see LICENSE file for details
-
 import 'package:flutter/material.dart';
 import 'dart:async';
 
@@ -58,7 +54,7 @@ class _EmergencyChecklistScreenState extends State<EmergencyChecklistScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Heißhunger-Notfall'),
-        backgroundColor: Colors.orange[700],
+        backgroundColor: Colors.green[700],
         foregroundColor: Colors.white,
       ),
       body: SafeArea(
@@ -316,7 +312,7 @@ class _EmergencyChecklistScreenState extends State<EmergencyChecklistScreen> {
             child: ElevatedButton(
               onPressed: onToggle,
               style: ElevatedButton.styleFrom(
-                backgroundColor: isComplete ? Colors.green[600] : Colors.blue[600],
+                backgroundColor: Colors.green[600],
                 foregroundColor: Colors.white,
                 padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               ),
