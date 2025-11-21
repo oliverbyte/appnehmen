@@ -1,6 +1,6 @@
-// Service Worker für automatische Updates
+// Service Worker for automatic updates
 const CACHE_NAME = 'appnehmen-cache-v1';
-// Assets werden relativ zum Service Worker Scope gecacht
+// Assets are cached relative to Service Worker scope
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -12,7 +12,7 @@ const ASSETS_TO_CACHE = [
   './icons/Icon-maskable-512.png'
 ];
 
-// Installation: Cache wichtige Assets
+// Installation: Cache important assets
 self.addEventListener('install', (event) => {
   console.log('[Service Worker] Installing...');
   event.waitUntil(
@@ -22,13 +22,13 @@ self.addEventListener('install', (event) => {
         return cache.addAll(ASSETS_TO_CACHE);
       })
       .then(() => {
-        // Forciere sofortiges Aktivieren des neuen Service Workers
+        // Force immediate activation of new Service Worker
         return self.skipWaiting();
       })
   );
 });
 
-// Aktivierung: Lösche alte Caches
+// Activation: Delete old caches
 self.addEventListener('activate', (event) => {
   console.log('[Service Worker] Activating...');
   event.waitUntil(
@@ -44,18 +44,18 @@ self.addEventListener('activate', (event) => {
         );
       })
       .then(() => {
-        // Übernimmt sofort die Kontrolle über alle Clients
+        // Take control over all clients immediately
         return self.clients.claim();
       })
   );
 });
 
-// Fetch: Network-First Strategie mit Fallback auf Cache
+// Fetch: Network-First strategy with cache fallback
 self.addEventListener('fetch', (event) => {
   event.respondWith(
     fetch(event.request)
       .then((response) => {
-        // Clone der Response für Cache
+        // Clone response for cache
         const responseToCache = response.clone();
         
         caches.open(CACHE_NAME)
@@ -66,13 +66,13 @@ self.addEventListener('fetch', (event) => {
         return response;
       })
       .catch(() => {
-        // Fallback auf Cache wenn offline
+        // Fallback to cache when offline
         return caches.match(event.request);
       })
   );
 });
 
-// Message Handler für manuelle Updates
+// Message handler for manual updates
 self.addEventListener('message', (event) => {
   if (event.data && event.data.type === 'SKIP_WAITING') {
     self.skipWaiting();

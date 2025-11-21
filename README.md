@@ -146,4 +146,4 @@ Dieses Projekt ist Open Source und kann frei verwendet, modifiziert und weiterve
 
 ---
 
-Made with ❤️ by Olli | MIT License
+Made with ❤️ by Oliver Byte | MIT License

@@ -1,66 +1,69 @@
-// Update Manager für automatische PWA Updates
+// Update Manager for automatic PWA updates
 class UpdateManager {
   constructor() {
     this.updateAvailable = false;
     this.registration = null;
   }
 
-  // Service Worker registrieren und auf Updates prüfen
+  // Register Service Worker and check for updates
   async init() {
     if (!('serviceWorker' in navigator)) {
-      console.log('Service Workers werden nicht unterstützt');
+      console.log('Service Workers are not supported');
       return;
     }
 
     try {
-      // Service Worker registrieren
-      // Automatisch den richtigen Pfad aus <base href> ermitteln
+      // Register Service Worker
+      // Automatically determine correct path from <base href>
       const baseUrl = document.querySelector('base')?.getAttribute('href') || '/';
       this.registration = await navigator.serviceWorker.register(
         baseUrl + 'service_worker.js',
         { scope: baseUrl }
       );
       
-      console.log('Service Worker registriert:', this.registration);
+      console.log('Service Worker registered:', this.registration);
 
-      // Auf Updates prüfen
+      // Check for updates
       this.registration.addEventListener('updatefound', () => {
         const newWorker = this.registration.installing;
-        console.log('Neuer Service Worker gefunden');
-
-        newWorker.addEventListener('statechange', () => {
-          if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-            // Neue Version verfügbar!
-            console.log('Neue App-Version verfügbar - Update wird durchgeführt...');
-            this.updateAvailable = true;
-            this.performUpdate(newWorker);
-          }
-        });
+        
+        // ONLY if a controller is already active (not on first load!)
+        if (navigator.serviceWorker.controller) {
+          console.log('Update detected - new version available');
+          
+          newWorker.addEventListener('statechange', () => {
+            if (newWorker.state === 'installed') {
+              console.log('Update ready - activating new version...');
+              this.updateAvailable = true;
+              this.performUpdate(newWorker);
+            }
+          });
+        }
       });
 
-      // Regelmäßig auf Updates prüfen (alle 60 Sekunden)
+      // Check for updates regularly (every 60 seconds)
       setInterval(() => {
         this.registration.update();
       }, 60000);
 
-      // Sofort beim Start auf Updates prüfen
+      // Check for updates immediately on start
       this.registration.update();
 
     } catch (error) {
-      console.error('Service Worker Registrierung fehlgeschlagen:', error);
+      console.error('Service Worker registration failed:', error);
     }
   }
 
-  // Update durchführen
+  // Perform update
   performUpdate(worker) {
-    // Sende Nachricht an neuen Service Worker, um sofort zu aktivieren
+    // Send message to new Service Worker to activate immediately
     worker.postMessage({ type: 'SKIP_WAITING' });
 
-    // Warte auf Controller-Wechsel
+    // Wait for controller change
     navigator.serviceWorker.addEventListener('controllerchange', () => {
-      console.log('Neue App-Version aktiv - Seite wird automatisch neu geladen...');
+      console.log('New app version active - page will be reloaded automatically...');
       
-      // Sofortiger Reload ohne visuelle Benachrichtigung
+      // Immediate reload without visual notification
       window.location.reload();
     });
   }
