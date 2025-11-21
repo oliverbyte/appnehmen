@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'dart:js' as js;
 import '../services/storage_service.dart';
 import '../widgets/install_banner.dart';
+import '../widgets/update_banner.dart';
 import 'emergency_checklist_screen.dart';
 import 'weight_history_screen.dart';
 import 'info_screen.dart';
@@ -22,11 +24,37 @@ class _HomeScreenState extends State<HomeScreen> {
   final _storageService = StorageService();
   Map<String, dynamic>? _userData;
   bool _isLoading = true;
+  bool _updateAvailable = false;
 
   @override
   void initState() {
     super.initState();
     _loadUserData();
+    _setupUpdateListener();
+  }
+
+  void _setupUpdateListener() {
+    // Register callback with update manager
+    js.context.callMethod('eval', [
+      '''
+      if (window.updateManager) {
+        window.updateManager.onUpdateAvailable(function(available) {
+          if (available && window.notifyFlutterUpdate) {
+            window.notifyFlutterUpdate();
+          }
+        });
+      }
+      '''
+    ]);
+
+    // Register Flutter callback that update manager can call
+    js.context['notifyFlutterUpdate'] = () {
+      if (mounted) {
+        setState(() {
+          _updateAvailable = true;
+        });
+      }
+    };
   }
 
   Future<void> _loadUserData() async {
@@ -206,7 +234,9 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Builder(
         builder: (context) => Column(
           children: [
-            // Install banner ganz oben
+            // Update banner at top (if update available)
+            if (_updateAvailable) const UpdateBanner(),
+            // Install banner
             const InstallBanner(),
             // AppBar als Widget
             Container(

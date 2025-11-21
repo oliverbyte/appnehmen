@@ -1,8 +1,10 @@
-// Update Manager for automatic PWA updates
+// Update Manager for PWA updates with user notification
 class UpdateManager {
   constructor() {
     this.updateAvailable = false;
     this.registration = null;
+    this.waitingWorker = null;
+    this.updateCallback = null;
   }
 
   // Register Service Worker and check for updates
@@ -33,9 +35,14 @@ class UpdateManager {
           
           newWorker.addEventListener('statechange', () => {
             if (newWorker.state === 'installed') {
-              console.log('Update ready - activating new version...');
+              console.log('Update ready - waiting for user action');
               this.updateAvailable = true;
-              this.performUpdate(newWorker);
+              this.waitingWorker = newWorker;
+              
+              // Notify Flutter app that update is available
+              if (this.updateCallback) {
+                this.updateCallback(true);
+              }
             }
           });
         }
@@ -54,21 +61,31 @@ class UpdateManager {
     }
   }
 
-  // Perform update
-  performUpdate(worker) {
-    // Send message to new Service Worker to activate immediately
-    worker.postMessage({ type: 'SKIP_WAITING' });
+  // Set callback function to notify Flutter when update is available
+  onUpdateAvailable(callback) {
+    this.updateCallback = callback;
+  }
 
-    // Wait for controller change
+  // User-triggered update - call this when user clicks update button
+  applyUpdate() {
+    if (!this.waitingWorker) {
+      console.log('No update available to apply');
+      return;
+    }
+
+    console.log('Applying update - activating new version...');
+    
+    // Send message to new Service Worker to activate immediately
+    this.waitingWorker.postMessage({ type: 'SKIP_WAITING' });
+
+    // Wait for controller change, then reload
     navigator.serviceWorker.addEventListener('controllerchange', () => {
-      console.log('New app version active - page will be reloaded automatically...');
-      
-      // Immediate reload without visual notification
+      console.log('New app version active - reloading page...');
       window.location.reload();
     });
   }
 
-  // Trigger manual update
+  // Trigger manual update check
   async checkForUpdates() {
     if (this.registration) {
       await this.registration.update();
