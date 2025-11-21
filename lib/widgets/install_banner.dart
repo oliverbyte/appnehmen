@@ -51,13 +51,13 @@ class _InstallBannerState extends State<InstallBanner> {
       duration: const Duration(milliseconds: 300),
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [Colors.green.shade600, Colors.green.shade700],
+          colors: [Colors.orange.shade600, Colors.orange.shade700],
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.1),
-            blurRadius: 4,
-            offset: const Offset(0, 2),
+            color: Colors.black.withValues(alpha: 0.15),
+            blurRadius: 6,
+            offset: const Offset(0, 3),
           ),
         ],
       ),
@@ -164,7 +164,7 @@ class _InstallBannerState extends State<InstallBanner> {
                       FilledButton(
                         onPressed: _dismissBanner,
                         style: FilledButton.styleFrom(
-                          backgroundColor: Colors.green.shade700,
+                          backgroundColor: Colors.orange.shade700,
                         ),
                         child: const Text('Verstanden'),
                       ),
@@ -181,7 +181,7 @@ class _InstallBannerState extends State<InstallBanner> {
   Widget _buildBenefit(IconData icon, String text) {
     return Row(
       children: [
-        Icon(icon, size: 18, color: Colors.green.shade700),
+        Icon(icon, size: 18, color: Colors.orange.shade700),
         const SizedBox(width: 8),
         Text(
           text,
