@@ -233,19 +233,29 @@ class InfoScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 12),
-                    Row(
-                      children: [
-                        Icon(Icons.email_outlined, color: Colors.orange[700], size: 20),
-                        const SizedBox(width: 8),
-                        Text(
-                          'info@oliverbyte.de',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.orange[900],
+                    InkWell(
+                      onTap: () async {
+                        final url = Uri.parse('mailto:info@oliverbyte.de');
+                        if (await canLaunchUrl(url)) {
+                          await launchUrl(url);
+                        }
+                      },
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(Icons.email_outlined, color: Colors.orange[700], size: 20),
+                          const SizedBox(width: 8),
+                          Text(
+                            'info@oliverbyte.de',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.orange[900],
+                              decoration: TextDecoration.underline,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                     const SizedBox(height: 12),
                     Text(
