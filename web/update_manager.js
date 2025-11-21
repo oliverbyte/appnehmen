@@ -58,12 +58,10 @@ class UpdateManager {
 
     // Warte auf Controller-Wechsel
     navigator.serviceWorker.addEventListener('controllerchange', () => {
-      console.log('Neue App-Version aktiv - Seite wird neu geladen...');
+      console.log('Neue App-Version aktiv - Seite wird automatisch neu geladen...');
       
-      // Kurze Verzögerung für bessere UX
-      setTimeout(() => {
-        window.location.reload();
-      }, 500);
+      // Sofortiger Reload ohne visuelle Benachrichtigung
+      window.location.reload();
     });
   }
 

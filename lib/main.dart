@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:intl/date_symbol_data_local.dart';
 import 'services/storage_service.dart';
 import 'screens/onboarding_screen.dart';
 import 'screens/home_screen.dart';
-import 'widgets/update_notifier.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,9 +21,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
         useMaterial3: true,
       ),
-      home: kIsWeb
-          ? const UpdateNotifier(child: SplashScreen())
-          : const SplashScreen(),
+      home: const SplashScreen(),
       debugShowCheckedModeBanner: false,
     );
   }

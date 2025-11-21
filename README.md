@@ -146,4 +146,4 @@ Dieses Projekt ist Open Source und kann frei verwendet, modifiziert und weiterve
 
 ---
 
-**Version 1.1.0** | Made with ❤️ by Olli | MIT License
+Made with ❤️ by Olli | MIT License
