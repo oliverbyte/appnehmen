@@ -183,7 +183,7 @@ class StorageService {
       Habit(
         id: 'habit_2',
         name: 'Nur 3 Hauptmahlzeiten',
-        description: 'Maximal handtellergroß, keine Snacks zwischen den Mahlzeiten',
+        description: 'Maximal handtellergroß, keine Snacks zwischen den Mahlzeiten, abends keine Kohlenhydrate',
         isDefault: true,
       ),
       Habit(
