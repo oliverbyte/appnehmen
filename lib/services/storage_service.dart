@@ -177,7 +177,7 @@ class StorageService {
       Habit(
         id: 'habit_1',
         name: 'Tägliches Workout',
-        description: '2 Runden: 30 Kniebeugen, 30 Damen-Liegestütz, 30 Situps oder Crunches',
+        description: '2 Runden: 30 Kniebeugen + 30 Damen-Liegestütz + 30 Situps oder Crunches',
         isDefault: true,
       ),
       Habit(
