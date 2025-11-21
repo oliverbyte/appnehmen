@@ -82,7 +82,7 @@ class _WeightHistoryScreenState extends State<WeightHistoryScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Gewichtsverlauf'),
-        backgroundColor: Colors.blue[700],
+        backgroundColor: Colors.green[700],
         foregroundColor: Colors.white,
       ),
       body: SafeArea(

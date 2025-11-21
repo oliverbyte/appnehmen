@@ -325,6 +325,21 @@ class StorageService {
     return habits.isNotEmpty;
   }
 
+  Future<double> getHabitCompletionPercentage(DateTime date) async {
+    final habits = await getHabits();
+    if (habits.isEmpty) return 0.0;
+    
+    final normalizedDate = DateTime(date.year, date.month, date.day);
+    int completedCount = 0;
+    
+    for (final habit in habits) {
+      final isCompleted = await isHabitCompletedOn(habit.id, normalizedDate);
+      if (isCompleted) completedCount++;
+    }
+    
+    return completedCount / habits.length;
+  }
+
   // ============ INSTALL PROMPT METHODS ============
 
   Future<bool> hasSeenInstallPrompt() async {

@@ -120,7 +120,10 @@ class _HabitsScreenState extends State<HabitsScreen> {
           ),
           ElevatedButton(
             onPressed: () => Navigator.of(context).pop(true),
-            style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.red,
+              foregroundColor: Colors.white,
+            ),
             child: const Text('Löschen'),
           ),
         ],
@@ -272,10 +275,43 @@ class _HabitsScreenState extends State<HabitsScreen> {
                               date.year == now.year;
               final isFuture = date.isAfter(now);
               
-              return FutureBuilder<bool>(
-                future: _storageService.areAllHabitsCompletedOn(date),
+              return FutureBuilder<double>(
+                future: _storageService.getHabitCompletionPercentage(date),
                 builder: (context, snapshot) {
-                  final allCompleted = snapshot.data ?? false;
+                  final percentage = snapshot.data ?? 0.0;
+                  final allCompleted = percentage >= 1.0;
+                  
+                  // Calculate green shade based on completion percentage
+                  Color bgColor;
+                  Color textColor;
+                  
+                  if (isFuture) {
+                    bgColor = Colors.grey[300]!;
+                    textColor = Colors.grey[600]!;
+                  } else if (percentage == 0.0) {
+                    bgColor = isToday ? Colors.orange[100]! : Colors.white;
+                    textColor = Colors.green[900]!;
+                  } else {
+                    // Gradient from light green to vibrant green based on percentage
+                    // More granular shading for better visual feedback
+                    int shade;
+                    if (percentage <= 0.2) {
+                      shade = 100; // 0-20%: very light
+                    } else if (percentage <= 0.4) {
+                      shade = 200; // 20-40%: light
+                    } else if (percentage <= 0.6) {
+                      shade = 300; // 40-60%: medium light
+                    } else if (percentage <= 0.8) {
+                      shade = 400; // 60-80%: medium
+                    } else if (percentage < 1.0) {
+                      shade = 500; // 80-99%: vibrant
+                    } else {
+                      shade = 600; // 100%: full completion - saturated but not too dark
+                    }
+                    
+                    bgColor = Colors.green[shade]!;
+                    textColor = percentage >= 0.6 ? Colors.white : Colors.green[900]!;
+                  }
                   
                   return GestureDetector(
                     onTap: isFuture ? null : () {
@@ -285,13 +321,7 @@ class _HabitsScreenState extends State<HabitsScreen> {
                       width: 40,
                       height: 60,
                       decoration: BoxDecoration(
-                        color: isFuture
-                            ? Colors.grey[300]
-                            : allCompleted
-                                ? Colors.green
-                                : isToday
-                                    ? Colors.orange[100]
-                                    : Colors.white,
+                        color: bgColor,
                         borderRadius: BorderRadius.circular(8),
                         border: Border.all(
                           color: isToday ? Colors.orange : Colors.green[300]!,
@@ -306,11 +336,7 @@ class _HabitsScreenState extends State<HabitsScreen> {
                             style: TextStyle(
                               fontSize: 10,
                               fontWeight: FontWeight.bold,
-                              color: isFuture
-                                  ? Colors.grey[600]
-                                  : allCompleted
-                                      ? Colors.white
-                                      : Colors.green[900],
+                              color: textColor,
                             ),
                           ),
                           const SizedBox(height: 4),
@@ -319,11 +345,7 @@ class _HabitsScreenState extends State<HabitsScreen> {
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
-                              color: isFuture
-                                  ? Colors.grey[600]
-                                  : allCompleted
-                                      ? Colors.white
-                                      : Colors.green[900],
+                              color: textColor,
                             ),
                           ),
                         ],

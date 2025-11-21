@@ -58,7 +58,7 @@ class InfoScreen extends StatelessWidget {
                         Icon(Icons.person, color: Colors.green[700], size: 28),
                         const SizedBox(width: 12),
                         Text(
-                          'Der Autor',
+                          'Über mich',
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -69,60 +69,11 @@ class InfoScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
                     const Text(
-                      'Olli hat selbst 45 Kilo abgenommen – mit Hilfe von kilos-verlasst-mich.de (Danke an Melli!) – und will gerne mit diesen kleinen aber wirksamen Alltagswerkzeugen anderen helfen, dasselbe zu erreichen.',
+                      'Ich habe selbst 45 Kilo abgenommen – mit Hilfe von kilos-verlasst-mich.de (Danke an Melli!) – und möchte mit diesen kleinen aber wirksamen Alltagswerkzeugen anderen helfen, dasselbe zu erreichen.',
                       style: TextStyle(
                         fontSize: 16,
                         height: 1.6,
                       ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 24),
-              Container(
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: Colors.green[50],
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: Colors.green[200]!),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(Icons.star, color: Colors.green[700], size: 28),
-                        const SizedBox(width: 12),
-                        Text(
-                          'Die Motivation',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.green[900],
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 16),
-                    const Text(
-                      'Abnehmen ist eine persönliche Reise. Diese App bietet dir einfache, aber effektive Werkzeuge für deinen Alltag:',
-                      style: TextStyle(
-                        fontSize: 16,
-                        height: 1.6,
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    _buildBulletPoint(
-                      '📊 Verfolge deinen Fortschritt',
-                      Colors.green,
-                    ),
-                    _buildBulletPoint(
-                      '💪 Bleib motiviert mit deinem "Warum"',
-                      Colors.green,
-                    ),
-                    _buildBulletPoint(
-                      '🚨 Bewältige Heißhunger-Momente',
-                      Colors.green,
                     ),
                   ],
                 ),
@@ -226,7 +177,7 @@ class InfoScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
                     const Text(
-                      'Olli freut sich jederzeit über Feedback und Anregungen via E-Mail:',
+                      'Ich freue mich jederzeit über Feedback und Anregungen via E-Mail:',
                       style: TextStyle(
                         fontSize: 16,
                         height: 1.6,

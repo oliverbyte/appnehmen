@@ -33,19 +33,17 @@
   <title>Appnehmen - Deine Abnehm-App</title>
   <link rel="manifest" href="manifest.json">
   
+  <!-- Preconnect for fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  
   <!-- PWA Meta Tags -->
   <meta name="theme-color" content="#4CAF50">
   <meta name="mobile-web-app-capable" content="yes">
 </head>
 <body>
-  <!-- Update Manager für automatische Updates -->
+  <!-- Update Manager for automatic updates (auto-initializes) -->
   <script src="update_manager.js"></script>
-  <script>
-    // Initialisiere Update Manager beim Laden
-    if (window.updateManager) {
-      window.updateManager.init();
-    }
-  </script>
   
   <script src="flutter_bootstrap.js" async></script>
 </body>
