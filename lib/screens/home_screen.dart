@@ -7,6 +7,7 @@ import '../services/storage_service.dart';
 import 'emergency_checklist_screen.dart';
 import 'weight_history_screen.dart';
 import 'info_screen.dart';
+import 'habits_screen.dart';
 
 // Helper function to format numbers with German comma
 String _formatGermanNumber(double number, int decimalPlaces) {
@@ -285,7 +286,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   const SizedBox(height: 12),
-                  Text(
+                  const Text(
                     'Appnehmen',
                     style: TextStyle(
                       color: Colors.white,
@@ -295,7 +296,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   Text(
                     'Hallo ${_userData!['name']}!',
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white70,
                       fontSize: 16,
                     ),
@@ -311,7 +312,7 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ),
             ListTile(
-              leading: Icon(Icons.show_chart, color: Colors.blue[700]),
+              leading: Icon(Icons.show_chart, color: Colors.green[600]),
               title: const Text('Gewichtsverlauf'),
               onTap: () {
                 Navigator.of(context).pop();
@@ -331,7 +332,19 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ),
             ListTile(
-              leading: Icon(Icons.sos, color: Colors.orange[700]),
+              leading: Icon(Icons.check_circle_outline, color: Colors.teal[700]),
+              title: const Text('Gewohnheiten'),
+              onTap: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const HabitsScreen(),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.sos, color: Colors.orange[600]),
               title: const Text('Heißhunger-Notfall'),
               onTap: () {
                 Navigator.of(context).pop();
@@ -344,7 +357,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const Divider(),
             ListTile(
-              leading: Icon(Icons.info_outline, color: Colors.purple[700]),
+              leading: Icon(Icons.info_outline, color: Colors.grey[700]),
               title: const Text('Info'),
               onTap: () {
                 Navigator.of(context).pop();
@@ -360,152 +373,196 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(24.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text(
-                'Hallo ${_userData!['name']}! 👋',
-                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-              ),
-              const SizedBox(height: 16),
-              _buildInfoCard(
-                icon: Icons.monitor_weight,
-                title: 'Aktuelles Gewicht',
-                value: '${_formatGermanNumber(_userData!['currentWeight'] as double, 1)} kg',
-                color: Colors.blue,
-                onTap: _showAddWeightDialog,
-                trailingIcon: Icons.edit,
-              ),
-              const SizedBox(height: 16),
-              _buildInfoCard(
-                icon: Icons.flag,
-                title: 'Wunschgewicht',
-                value: '${_formatGermanNumber(_userData!['targetWeight'] as double, 1)} kg',
-                color: Colors.green,
-              ),
-              const SizedBox(height: 16),
-              _buildInfoCard(
-                icon: Icons.trending_down,
-                title: 'Noch zu verlieren',
-                value: '${_formatGermanNumber(_weightToLose, 1)} kg',
-                color: Colors.orange,
-              ),
-              const SizedBox(height: 24),
+              // Header
               Container(
-                padding: const EdgeInsets.all(20),
+                padding: const EdgeInsets.all(24),
                 decoration: BoxDecoration(
-                  color: Colors.purple[50],
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: Colors.purple[200]!),
+                  color: Colors.green[700],
+                  borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(24),
+                    bottomRight: Radius.circular(24),
+                  ),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      children: [
-                        Icon(Icons.favorite, color: Colors.purple[700]),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: Text(
-                            'Dein Warum',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.purple[900],
-                            ),
-                          ),
-                        ),
-                        IconButton(
-                          icon: Icon(Icons.edit, color: Colors.purple[700], size: 20),
-                          onPressed: _showEditWhyDialog,
-                          tooltip: 'Bearbeiten',
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 12),
                     Text(
-                      _userData!['why'] as String,
+                      'Hallo ${_userData!['name']}! 👋',
+                      style: const TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      'Noch ${_formatGermanNumber(_weightToLose, 1)} kg bis zum Ziel',
                       style: TextStyle(
                         fontSize: 16,
-                        color: Colors.purple[800],
-                        height: 1.5,
+                        color: Colors.green[50],
                       ),
                     ),
                   ],
                 ),
               ),
-              const SizedBox(height: 32),
-              Row(
-                children: [
-                  Expanded(
-                    child: ElevatedButton.icon(
-                      onPressed: () {
+              
+              const SizedBox(height: 24),
+              
+              // Dein Warum - ganz oben
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Container(
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    color: Colors.green[50],
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(color: Colors.green[200]!),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(Icons.favorite, color: Colors.green[700], size: 20),
+                          const SizedBox(width: 8),
+                          const Expanded(
+                            child: Text(
+                              'Dein Warum',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          IconButton(
+                            icon: Icon(Icons.edit, color: Colors.green[700], size: 20),
+                            onPressed: _showEditWhyDialog,
+                            padding: EdgeInsets.zero,
+                            constraints: const BoxConstraints(),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 12),
+                      Text(
+                        _userData!['why'] as String,
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.green[900],
+                          height: 1.5,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              
+              const SizedBox(height: 24),
+              
+              // 3 Hauptbereiche
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Column(
+                  children: [
+                    // 1. Mein Gewicht
+                    _buildMainSection(
+                      icon: Icons.monitor_weight,
+                      title: 'Mein Gewicht',
+                      color: Colors.green,
+                      onTap: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => const WeightHistoryScreen(),
                           ),
                         );
                       },
-                      icon: const Icon(Icons.show_chart, size: 24),
-                      label: const Text(
-                        'Verlauf',
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue[600],
-                        foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              _buildWeightInfo(
+                                'Aktuell',
+                                _formatGermanNumber(_userData!['currentWeight'] as double, 1),
+                              ),
+                              Container(
+                                height: 40,
+                                width: 1,
+                                color: Colors.green[200],
+                              ),
+                              _buildWeightInfo(
+                                'Ziel',
+                                _formatGermanNumber(_userData!['targetWeight'] as double, 1),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 16),
+                          SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButton.icon(
+                              onPressed: _showAddWeightDialog,
+                              icon: const Icon(Icons.add, size: 20),
+                              label: const Text('Gewicht hinzufügen'),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.green[600],
+                                foregroundColor: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: ElevatedButton.icon(
-                      onPressed: _showAddWeightDialog,
-                      icon: const Icon(Icons.add_circle_outline, size: 24),
-                      label: const Text(
-                        'Gewicht',
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.green[600],
-                        foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
+                    
+                    const SizedBox(height: 16),
+                    
+                    // 2. Meine Gewohnheiten
+                    _buildMainSection(
+                      icon: Icons.check_circle_outline,
+                      title: 'Meine Gewohnheiten',
+                      color: Colors.green,
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const HabitsScreen(),
+                          ),
+                        );
+                      },
+                      child: const Text(
+                        'Tracke deine täglichen Gewohnheiten für langfristigen Erfolg',
+                        style: TextStyle(fontSize: 14),
+                        textAlign: TextAlign.center,
                       ),
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 12),
-              ElevatedButton.icon(
-                onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => const EmergencyChecklistScreen(),
+                    
+                    const SizedBox(height: 16),
+                    
+                    // 3. Heißhunger-Notfall
+                    _buildMainSection(
+                      icon: Icons.sos,
+                      title: 'Heißhunger-Notfall',
+                      color: Colors.orange,
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const EmergencyChecklistScreen(),
+                          ),
+                        );
+                      },
+                      child: const Text(
+                        'Schnelle Hilfe bei akutem Heißhunger',
+                        style: TextStyle(fontSize: 14),
+                        textAlign: TextAlign.center,
+                      ),
                     ),
-                  );
-                },
-                icon: const Icon(Icons.sos, size: 28),
-                label: const Text(
-                  'Heißhunger-Notfall!',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.orange[600],
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(vertical: 20),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
+                    
+                    
+                    const SizedBox(height: 24),
+                  ],
                 ),
               ),
             ],
@@ -515,69 +572,85 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildInfoCard({
+  Widget _buildMainSection({
     required IconData icon,
     required String title,
-    required String value,
     required MaterialColor color,
-    VoidCallback? onTap,
-    IconData? trailingIcon,
+    required VoidCallback onTap,
+    required Widget child,
   }) {
-    final card = Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: color[50],
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: color[200]!),
-      ),
-      child: Row(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: color[100],
-              borderRadius: BorderRadius.circular(8),
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(16),
+      child: Container(
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: color[200]!),
+          boxShadow: [
+            BoxShadow(
+              color: color[100]!.withValues(alpha: 0.5),
+              blurRadius: 8,
+              offset: const Offset(0, 2),
             ),
-            child: Icon(icon, color: color[700], size: 28),
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+          ],
+        ),
+        child: Column(
+          children: [
+            Row(
               children: [
-                Text(
-                  title,
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: color[700],
-                    fontWeight: FontWeight.w500,
+                Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: color[100],
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Icon(icon, color: color[700], size: 28),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    title,
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: color[900],
+                    ),
                   ),
                 ),
-                const SizedBox(height: 4),
-                Text(
-                  value,
-                  style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                    color: color[900],
-                  ),
-                ),
+                Icon(Icons.arrow_forward_ios, color: color[400], size: 18),
               ],
             ),
-          ),
-          if (trailingIcon != null)
-            Icon(trailingIcon, color: color[700], size: 24),
-        ],
+            const SizedBox(height: 16),
+            child,
+          ],
+        ),
       ),
     );
+  }
 
-    if (onTap != null) {
-      return InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(12),
-        child: card,
-      );
-    }
-    return card;
+  Widget _buildWeightInfo(String label, String value) {
+    return Column(
+      children: [
+        Text(
+          label,
+          style: TextStyle(
+            fontSize: 12,
+            color: Colors.green[700],
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        const SizedBox(height: 4),
+        Text(
+          '$value kg',
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            color: Colors.green[900],
+          ),
+        ),
+      ],
+    );
   }
 }
