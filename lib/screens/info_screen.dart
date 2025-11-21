@@ -69,7 +69,7 @@ class InfoScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
                     const Text(
-                      'Olli hat selbst 45 Kilos abgenommen – mit Hilfe von kilos-verlasst-mich.de (Danke an Melli!) – und will gerne mit diesen kleinen aber wirksamen Alltagswerkzeugen anderen helfen, dasselbe zu erreichen.',
+                      'Olli hat selbst 45 Kilo abgenommen – mit Hilfe von kilos-verlasst-mich.de (Danke an Melli!) – und will gerne mit diesen kleinen aber wirksamen Alltagswerkzeugen anderen helfen, dasselbe zu erreichen.',
                       style: TextStyle(
                         fontSize: 16,
                         height: 1.6,
