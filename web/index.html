@@ -38,6 +38,15 @@
   <meta name="mobile-web-app-capable" content="yes">
 </head>
 <body>
+  <!-- Update Manager für automatische Updates -->
+  <script src="update_manager.js"></script>
+  <script>
+    // Initialisiere Update Manager beim Laden
+    if (window.updateManager) {
+      window.updateManager.init();
+    }
+  </script>
+  
   <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>

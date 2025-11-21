@@ -38,6 +38,11 @@ jobs:
       - name: Build web
         run: flutter build web --release --base-href "/appnehmen/"
 
+      - name: Update Service Worker cache version
+        run: |
+          COMMIT_ID=$(git rev-parse --short HEAD)
+          sed -i "s/const CACHE_NAME = 'appnehmen-cache-v[^']*'/const CACHE_NAME = 'appnehmen-cache-v$COMMIT_ID'/" build/web/service_worker.js
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
