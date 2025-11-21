@@ -7,6 +7,7 @@ Eine Progressive Web App (PWA) zur Unterstützung beim Abnehmen – mit lokaler 
 **Appnehmen** ist eine minimalistische PWA, die dir mit einfachen aber wirksamen Werkzeugen beim Abnehmen hilft:
 
 - 📊 **Gewichtsverfolgung**: Verfolge deinen Fortschritt mit grafischer Auswertung
+- ✅ **Gewohnheiten-Tracker**: Verfolge tägliche Gewohnheiten mit Wochen-Übersicht
 - 💪 **Dein Warum**: Bleib motiviert durch dein persönliches "Warum"
 - 🚨 **Heißhunger-Notfall**: Strukturierte Hilfe bei akuten Heißhunger-Momenten
 - 🔒 **100% Privat**: Alle Daten bleiben lokal auf deinem Gerät
@@ -51,15 +52,28 @@ Oliver hat selbst 45 Kilos abgenommen und teilt mit dieser App die kleinen aber 
 - Erstmalige Erfassung von Name, aktuellem Gewicht, Wunschgewicht und persönlicher Motivation
 
 ### Startseite
-- Übersicht über aktuelles Gewicht, Wunschgewicht und verbleibende Kilos
-- Schnellzugriff auf alle Hauptfunktionen
-- Editierbare Motivation ("Dein Warum")
+- Persönliche Begrüßung mit verbleibenden Kilos
+- Prominent platziertes "Dein Warum" für tägliche Motivation
+- Drei Hauptbereiche:
+  - **Mein Gewicht**: Aktuelle Übersicht und neuen Eintrag hinzufügen
+  - **Meine Gewohnheiten**: Direkter Zugriff auf den Gewohnheiten-Tracker
+  - **Heißhunger-Notfall**: Schneller Zugriff auf die 2-Schritte-Hilfe
 
 ### Gewichtsverfolgung
 - Eingabe neuer Gewichtsmessungen (mit deutscher Komma-Unterstützung: 75,5 kg)
 - Grafische Darstellung des Verlaufs
 - Statistiken: Startgewicht, aktuelles Gewicht, verlorene Kilos
 - Chronologische Liste aller Einträge
+
+### Gewohnheiten-Tracker
+- Tägliches Tracking von gesunden Gewohnheiten
+- 3 Standard-Gewohnheiten voreingestellt:
+  - Tägliches Workout (2 Runden à 30x Übungen)
+  - Nur 3 Hauptmahlzeiten (maximal handtellergroß, keine Snacks)
+  - 30 Minuten Bewegung (Walken, Fahrrad, Joggen)
+- Eigene Gewohnheiten hinzufügen und editieren
+- Wöchentliche Übersicht: Grüne Tage zeigen erfolgreiche Tage
+- Simple Checkbox-Ansicht für den aktuellen Tag
 
 ### Heißhunger-Notfall
 - **Schritt 1**: Trinke 2 Gläser Wasser
@@ -132,4 +146,4 @@ Dieses Projekt ist Open Source und kann frei verwendet, modifiziert und weiterve
 
 ---
 
-**Version 1.0.0** | Made with ❤️ by Oliver | MIT License
+**Version 1.1.0** | Made with ❤️ by Oliver | MIT License
