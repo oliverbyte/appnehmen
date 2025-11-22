@@ -1,6 +1,6 @@
 {
-    "name": "Appnehmen - Deine Abnehm-App",
-    "short_name": "Appnehmen",
+    "name": "Einfach Appnehmen - Deine Abnehm-App",
+    "short_name": "Einfach Appnehmen",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#4CAF50",
