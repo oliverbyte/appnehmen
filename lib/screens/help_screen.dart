@@ -89,10 +89,10 @@ class HelpScreen extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        Icon(Icons.android, color: Colors.green[700], size: 28),
+                        Icon(Icons.phone_android, color: Colors.green[700], size: 28),
                         const SizedBox(width: 12),
                         Text(
-                          'Android Installation',
+                          'Android',
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -102,30 +102,8 @@ class HelpScreen extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 16),
-                    _buildStep('1', 'Öffne die App in Chrome oder deinem Standard-Browser'),
-                    _buildStep('2', 'Tippe oben rechts auf die drei Punkte (⋮)'),
-                    _buildStep('3', 'Wähle "App installieren" oder "Zum Startbildschirm"'),
-                    _buildStep('4', 'Bestätige mit "Installieren"'),
-                    const SizedBox(height: 12),
-                    Container(
-                      padding: const EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        color: Colors.green[100],
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Row(
-                        children: [
-                          Icon(Icons.check_circle, color: Colors.green[700], size: 20),
-                          const SizedBox(width: 8),
-                          const Expanded(
-                            child: Text(
-                              'Fertig! Die App ist jetzt auf deinem Startbildschirm',
-                              style: TextStyle(fontSize: 14),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                    _buildStep('1', 'Browser öffnen (Chrome empfohlen)'),
+                    _buildStep('2', 'Menü (⋮) → "App installieren"'),
                   ],
                 ),
               ),
@@ -133,52 +111,61 @@ class HelpScreen extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: Colors.grey[100],
+                  color: Colors.blue[50],
                   borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: Colors.grey[300]!),
+                  border: Border.all(color: Colors.blue[200]!),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       children: [
-                        Icon(Icons.apple, color: Colors.grey[800], size: 28),
+                        Icon(Icons.apple, color: Colors.blue[700], size: 28),
                         const SizedBox(width: 12),
                         Text(
-                          'iPhone/iPad Installation',
+                          'iPhone/iPad',
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
-                            color: Colors.grey[900],
+                            color: Colors.blue[900],
                           ),
                         ),
                       ],
                     ),
                     const SizedBox(height: 16),
-                    _buildStep('1', 'Öffne die App in Safari (wichtig: Safari, nicht Chrome!)'),
-                    _buildStep('2', 'Tippe unten auf das Teilen-Symbol (□↑)'),
-                    _buildStep('3', 'Scrolle nach unten und wähle "Zum Home-Bildschirm"'),
-                    _buildStep('4', 'Tippe oben rechts auf "Hinzufügen"'),
-                    const SizedBox(height: 12),
-                    Container(
-                      padding: const EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        color: Colors.grey[200],
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Row(
-                        children: [
-                          Icon(Icons.check_circle, color: Colors.grey[700], size: 20),
-                          const SizedBox(width: 8),
-                          const Expanded(
-                            child: Text(
-                              'Fertig! Die App ist jetzt auf deinem Home-Bildschirm',
-                              style: TextStyle(fontSize: 14),
-                            ),
+                    _buildStep('1', 'Safari öffnen (wichtig!)'),
+                    _buildStep('2', 'Teilen (□↑) → "Zum Home-Bildschirm"'),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 24),
+              Container(
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: Colors.orange[50],
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: Colors.orange[200]!),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(Icons.laptop, color: Colors.orange[700], size: 28),
+                        const SizedBox(width: 12),
+                        Text(
+                          'Chrome/Edge (PC)',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.orange[900],
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
+                    const SizedBox(height: 16),
+                    _buildStep('1', 'App öffnen'),
+                    _buildStep('2', 'Install-Symbol (⊕) in Adresszeile klicken'),
                   ],
                 ),
               ),
