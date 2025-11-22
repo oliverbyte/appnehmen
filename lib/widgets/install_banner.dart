@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import '../services/storage_service.dart';
+import '../screens/help_screen.dart';
 
 class InstallBanner extends StatefulWidget {
   const InstallBanner({super.key});
@@ -12,7 +13,6 @@ class InstallBanner extends StatefulWidget {
 class _InstallBannerState extends State<InstallBanner> {
   final _storageService = StorageService();
   bool _isDismissed = false;
-  bool _isExpanded = false;
   bool _isLoading = true;
 
   @override
@@ -36,6 +36,14 @@ class _InstallBannerState extends State<InstallBanner> {
     });
   }
 
+  void _openHelpScreen() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const HelpScreen(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     // Don't show on non-web platforms or if dismissed or still loading
@@ -43,8 +51,7 @@ class _InstallBannerState extends State<InstallBanner> {
       return const SizedBox.shrink();
     }
 
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 300),
+    return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [Colors.orange.shade600, Colors.orange.shade700],
@@ -57,159 +64,48 @@ class _InstallBannerState extends State<InstallBanner> {
           ),
         ],
       ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          // Compact header (always visible)
-          Material(
-            color: Colors.transparent,
-            child: InkWell(
-              onTap: () {
-                setState(() {
-                  _isExpanded = !_isExpanded;
-                });
-              },
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-                child: Row(
-                  children: [
-                    const Icon(
-                      Icons.download_rounded,
-                      color: Colors.white,
-                      size: 26,
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Text(
-                        'App installieren für bessere Erfahrung',
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 14,
-                        ),
-                      ),
-                    ),
-                    Icon(
-                      _isExpanded ? Icons.expand_less : Icons.expand_more,
-                      color: Colors.white,
-                    ),
-                    const SizedBox(width: 8),
-                    InkWell(
-                      onTap: _dismissBanner,
-                      child: const Icon(
-                        Icons.close,
-                        color: Colors.white,
-                        size: 20,
-                      ),
-                    ),
-                  ],
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: _openHelpScreen,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+            child: Row(
+              children: [
+                const Icon(
+                  Icons.download_rounded,
+                  color: Colors.white,
+                  size: 26,
                 ),
-              ),
-            ),
-          ),
-          
-          // Expanded content
-          if (_isExpanded)
-            Container(
-              color: Colors.white,
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  // Benefits
-                  _buildBenefit(Icons.cloud_off, 'Offline verfügbar'),
-                  const SizedBox(height: 8),
-                  _buildBenefit(Icons.speed, 'Schneller Zugriff'),
-                  const SizedBox(height: 8),
-                  _buildBenefit(Icons.phone_iphone, 'Wie eine native App'),
-                  const SizedBox(height: 16),
-                  
-                  const Divider(),
-                  const SizedBox(height: 12),
-                  
-                  // Instructions
-                  Text(
-                    'So installierst du:',
+                const SizedBox(width: 12),
+                const Expanded(
+                  child: Text(
+                    'App installieren? Hier erfährst du wie!',
                     style: TextStyle(
-                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
                       fontSize: 14,
-                      color: Colors.grey.shade800,
                     ),
                   ),
-                  const SizedBox(height: 8),
-                  _buildInstruction('iOS', 'Teilen → "Zum Home-Bildschirm"'),
-                  const SizedBox(height: 4),
-                  _buildInstruction('Android', 'Menü (⋮) → "App installieren"'),
-                  const SizedBox(height: 4),
-                  _buildInstruction('Desktop', 'Klick auf ⊕ in der Adresszeile'),
-                  const SizedBox(height: 16),
-                  
-                  // Action buttons
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      TextButton(
-                        onPressed: _dismissBanner,
-                        child: Text(
-                          'Nicht mehr anzeigen',
-                          style: TextStyle(color: Colors.grey.shade700),
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      FilledButton(
-                        onPressed: _dismissBanner,
-                        style: FilledButton.styleFrom(
-                          backgroundColor: Colors.orange.shade700,
-                        ),
-                        child: const Text('Verstanden'),
-                      ),
-                    ],
+                ),
+                const Icon(
+                  Icons.arrow_forward,
+                  color: Colors.white,
+                  size: 20,
+                ),
+                const SizedBox(width: 8),
+                InkWell(
+                  onTap: _dismissBanner,
+                  child: const Icon(
+                    Icons.close,
+                    color: Colors.white,
+                    size: 20,
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildBenefit(IconData icon, String text) {
-    return Row(
-      children: [
-        Icon(icon, size: 18, color: Colors.orange.shade700),
-        const SizedBox(width: 8),
-        Text(
-          text,
-          style: TextStyle(
-            fontSize: 13,
-            color: Colors.grey.shade800,
           ),
         ),
-      ],
-    );
-  }
-
-  Widget _buildInstruction(String platform, String instruction) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 8),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            '$platform: ',
-            style: const TextStyle(
-              fontWeight: FontWeight.w600,
-              fontSize: 13,
-            ),
-          ),
-          Expanded(
-            child: Text(
-              instruction,
-              style: const TextStyle(fontSize: 13),
-            ),
-          ),
-        ],
       ),
     );
   }

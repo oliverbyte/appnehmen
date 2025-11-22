@@ -6,6 +6,7 @@ import '../widgets/update_banner.dart';
 import 'emergency_checklist_screen.dart';
 import 'weight_history_screen.dart';
 import 'info_screen.dart';
+import 'help_screen.dart';
 import 'habits_screen.dart';
 
 // Helper function to format numbers with German comma
@@ -430,6 +431,18 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ),
             const Divider(),
+            ListTile(
+              leading: Icon(Icons.help_outline, color: Colors.blue[600]),
+              title: const Text('Hilfe'),
+              onTap: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const HelpScreen(),
+                  ),
+                );
+              },
+            ),
             ListTile(
               leading: Icon(Icons.info_outline, color: Colors.grey[700]),
               title: const Text('Info'),
