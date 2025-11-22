@@ -253,7 +253,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     const Expanded(
                       child: Text(
-                        'Appnehmen',
+                        'Einfach Appnehmen',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 20,
@@ -361,7 +361,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   const SizedBox(height: 12),
                   const Text(
-                    'Appnehmen',
+                    'Einfach Appnehmen',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 24,

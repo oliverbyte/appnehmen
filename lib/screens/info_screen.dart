@@ -36,7 +36,7 @@ class InfoScreen extends StatelessWidget {
               ),
               const SizedBox(height: 24),
               Text(
-                'Über Appnehmen',
+                'Über "Einfach Appnehmen"',
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                       fontWeight: FontWeight.bold,
                       color: Colors.green[900],
@@ -69,7 +69,7 @@ class InfoScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
                     const Text(
-                      'Ich habe selbst 45 Kilo abgenommen – mit Hilfe von kilos-verlasst-mich.de (Danke an Melli!) – und möchte mit diesen kleinen aber wirksamen Alltagswerkzeugen anderen helfen, dasselbe zu erreichen.',
+                      'Ich habe selbst 45 Kilo abgenommen – mit Hilfe von kilos-verlasst-mich.de (Danke an Melli!) und meiner Frau – und möchte mit diesen kleinen aber wirksamen Alltagswerkzeugen anderen helfen, dasselbe zu erreichen.',
                       style: TextStyle(
                         fontSize: 16,
                         height: 1.6,

@@ -60,7 +60,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               children: [
                 const SizedBox(height: 40),
                 Text(
-                  'Willkommen bei Appnehmen',
+                  'Willkommen bei \n"Einfach Appnehmen"',
                   style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                         color: Colors.green[700],
