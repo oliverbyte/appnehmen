@@ -1,4 +1,4 @@
-# Appnehmen 🏋️
+# Einfach Appnehmen 🏋️
 
 Eine Progressive Web App (PWA) zur Unterstützung beim Abnehmen – mit lokaler Datenspeicherung, Gewichtsverfolgung und Heißhunger-Notfallhilfe.
 
