@@ -3,6 +3,7 @@ import 'dart:js' as js;
 import '../services/storage_service.dart';
 import '../widgets/install_banner.dart';
 import '../widgets/update_banner.dart';
+import '../widgets/tip_dialog.dart';
 import 'emergency_checklist_screen.dart';
 import 'weight_history_screen.dart';
 import 'info_screen.dart';
@@ -32,6 +33,14 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     _loadUserData();
     _setupUpdateListener();
+    _showTipAfterBuild();
+  }
+
+  void _showTipAfterBuild() {
+    // Show tip after first build
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      TipDialog.showTipIfAvailable(context);
+    });
   }
 
   void _setupUpdateListener() {
