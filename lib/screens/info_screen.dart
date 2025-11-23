@@ -105,7 +105,7 @@ class InfoScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
                     const Text(
-                      'Alle deine Daten werden ausschließlich lokal auf deinem Gerät gespeichert. Es werden keine Informationen an Server übertragen oder mit Dritten geteilt.',
+                      'Alle deine persönlichen Daten (Gewicht, Gewohnheiten) werden ausschließlich lokal auf deinem Gerät gespeichert.\n\nZur Verbesserung der App werden anonyme Nutzungsstatistiken erfasst (Anzahl Nutzer, letzte Nutzung, App-Version). Diese Daten sind nicht personenbezogen und dienen rein statistischen Zwecken – ohne Zustimmungspflicht gemäß DSGVO Art. 6 Abs. 1 lit. f.',
                       style: TextStyle(
                         fontSize: 16,
                         height: 1.6,

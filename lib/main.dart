@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'services/storage_service.dart';
+import 'services/analytics_service.dart';
 import 'screens/onboarding_screen.dart';
 import 'screens/home_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initializeDateFormatting('de_DE', null);
+  
+  // Initialize Mixpanel analytics
+  await AnalyticsService.initialize();
+  
   runApp(const MyApp());
 }
 

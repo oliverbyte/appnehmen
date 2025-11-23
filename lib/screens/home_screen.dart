@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:js' as js;
 import '../services/storage_service.dart';
+import '../services/analytics_service.dart';
+import '../build_info.dart';
 import '../widgets/install_banner.dart';
 import '../widgets/update_banner.dart';
 import '../widgets/tip_dialog.dart';
@@ -33,6 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     _loadUserData();
     _setupUpdateListener();
+    _trackAppOpen();
   }
 
   @override
@@ -41,6 +44,11 @@ class _HomeScreenState extends State<HomeScreen> {
     // Check for tip every time the screen becomes visible
     // TipService ensures max 1 tip per day
     _showTipAfterBuild();
+  }
+
+  void _trackAppOpen() {
+    // Track app open event with commit ID from build
+    AnalyticsService.trackAppOpen(commitId: buildCommitId);
   }
 
   void _showTipAfterBuild() {
