@@ -11,6 +11,7 @@ class Tip {
 class TipService {
   static const String _seenTipsKey = 'seen_tips';
   static const String _lastTipDateKey = 'last_tip_date';
+  static const String _firstAppStartDateKey = 'first_app_start_date';
 
   // List of all available tips - can be extended at any time
   // New tips can simply be added - they will be automatically shown to users who haven't seen them yet
@@ -71,15 +72,44 @@ class TipService {
       id: 'tip_14',
       text: 'Trink vor, beim und nach dem Essen 2 Gläser Wasser oder iss einen Skyr. Das füllt den Magen und du isst automatisch weniger!',
     ),
+    Tip(
+      id: 'tip_15',
+      text: 'Neue Gewohnheiten brauchen etwa 3 Monate, bis sie zur Routine werden. Gib nicht vorher auf - es wird leichter!',
+    ),
+    Tip(
+      id: 'tip_16',
+      text: 'Alkohol hat nicht nur viele Kalorien, sondern hemmt auch den Fettabbau im Körper. Am besten meiden, wenn du abnehmen willst.',
+    ),
+    Tip(
+      id: 'tip_17',
+      text: 'Ausrutscher bei einer Gewohnheit? Kein Problem! Es zählen die anderen 350 Tage im Jahr. Einfach weitermachen und niemals aufgeben - der Alltag entscheidet!',
+    ),
+    Tip(
+      id: 'tip_18',
+      text: 'Erkenne deine Muster: Was genau lässt dich stressen und essen? Erkenne die Trigger, vermeide sie und etabliere Alternativen.',
+    ),
   ];
 
   /// Returns a random unseen tip, or null if all have been seen or a tip was already shown today
   Future<Tip?> getNextUnseenTip() async {
     final prefs = await SharedPreferences.getInstance();
     
+    // Store first app start date if not set
+    final firstStartDate = prefs.getString(_firstAppStartDateKey);
+    final today = DateTime.now().toIso8601String().split('T')[0]; // YYYY-MM-DD
+    
+    if (firstStartDate == null) {
+      await prefs.setString(_firstAppStartDateKey, today);
+      return null; // Don't show tip on first day (new users are overwhelmed)
+    }
+    
+    // Don't show tip on the same day as first app start
+    if (firstStartDate == today) {
+      return null;
+    }
+    
     // Check if a tip was already shown today
     final lastTipDate = prefs.getString(_lastTipDateKey);
-    final today = DateTime.now().toIso8601String().split('T')[0]; // YYYY-MM-DD
     
     if (lastTipDate == today) {
       return null; // Tip already shown today

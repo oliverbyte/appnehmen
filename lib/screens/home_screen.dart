@@ -33,13 +33,22 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     _loadUserData();
     _setupUpdateListener();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Check for tip every time the screen becomes visible
+    // TipService ensures max 1 tip per day
     _showTipAfterBuild();
   }
 
   void _showTipAfterBuild() {
-    // Show tip after first build
+    // Show tip after build, but only if we're on the home screen
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      TipDialog.showTipIfAvailable(context);
+      if (mounted) {
+        TipDialog.showTipIfAvailable(context);
+      }
     });
   }
 
