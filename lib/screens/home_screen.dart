@@ -36,6 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
     _loadUserData();
     _setupUpdateListener();
     _trackAppOpen();
+    AnalyticsService.trackScreenView('home');
   }
 
   @override
@@ -163,6 +164,9 @@ class _HomeScreenState extends State<HomeScreen> {
       final weight = double.parse(normalizedText);
       await _storageService.addWeightEntry(weight);
       await _loadUserData();
+      
+      // Track weight update
+      AnalyticsService.trackWeightUpdate();
       
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(

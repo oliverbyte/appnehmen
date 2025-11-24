@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../config/commit_id.dart';
+import '../services/analytics_service.dart';
 
 class InfoScreen extends StatelessWidget {
   const InfoScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    AnalyticsService.trackScreenView('info');
     return Scaffold(
       appBar: AppBar(
         title: const Text('Info'),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../services/storage_service.dart';
+import '../services/analytics_service.dart';
 import 'package:intl/intl.dart';
 
 class HabitsScreen extends StatefulWidget {
@@ -19,6 +20,7 @@ class _HabitsScreenState extends State<HabitsScreen> {
   @override
   void initState() {
     super.initState();
+    AnalyticsService.trackScreenView('habits');
     _loadData();
   }
 
@@ -36,6 +38,9 @@ class _HabitsScreenState extends State<HabitsScreen> {
   Future<void> _toggleHabit(String habitId) async {
     await _storageService.toggleHabitCompletion(habitId, _selectedDate);
     await _loadData();
+    
+    // Track habit toggle
+    AnalyticsService.trackHabitToggle();
   }
 
   bool _isCompletedToday(String habitId) {

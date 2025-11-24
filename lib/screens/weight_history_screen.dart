@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:intl/intl.dart';
 import '../services/storage_service.dart';
+import '../services/analytics_service.dart';
 
 // Helper function to format numbers with German comma
 String _formatGermanNumber(double number, int decimalPlaces) {
@@ -24,6 +25,7 @@ class _WeightHistoryScreenState extends State<WeightHistoryScreen> {
   @override
   void initState() {
     super.initState();
+    AnalyticsService.trackScreenView('weight_history');
     _loadData();
   }
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
+import '../services/analytics_service.dart';
 
 class EmergencyChecklistScreen extends StatefulWidget {
   const EmergencyChecklistScreen({super.key});
@@ -16,6 +17,12 @@ class _EmergencyChecklistScreenState extends State<EmergencyChecklistScreen> {
   bool _timerStarted = false;
   int _secondsRemaining = 600; // 10 minutes = 600 seconds
   Timer? _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    AnalyticsService.trackScreenView('emergency_checklist');
+  }
 
   @override
   void dispose() {

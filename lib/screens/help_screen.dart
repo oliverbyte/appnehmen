@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import '../services/analytics_service.dart';
 
 class HelpScreen extends StatelessWidget {
   const HelpScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    AnalyticsService.trackScreenView('help');
     return Scaffold(
       appBar: AppBar(
         title: const Text('Hilfe'),

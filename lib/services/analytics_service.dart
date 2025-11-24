@@ -60,4 +60,31 @@ class AnalyticsService {
       print('Failed to track event $eventName: $e');
     }
   }
+
+  /// Track screen view
+  static Future<void> trackScreenView(String screenName) async {
+    await trackEvent('screen_view', properties: {'screen_name': screenName});
+  }
+
+  /// Set user property
+  static Future<void> setUserProperty(String propertyName, dynamic value) async {
+    try {
+      js.context['mixpanel']['people'].callMethod('set', [propertyName, value]);
+      print('Set user property: $propertyName = $value');
+    } catch (e) {
+      print('Failed to set user property $propertyName: $e');
+    }
+  }
+
+  /// Track weight update (without actual weight value for privacy)
+  static Future<void> trackWeightUpdate() async {
+    await trackEvent('weight_updated');
+    await setUserProperty('last_weight_update', DateTime.now().toIso8601String());
+  }
+
+  /// Track habit toggle (without habit details for privacy)
+  static Future<void> trackHabitToggle() async {
+    await trackEvent('habit_toggled');
+    await setUserProperty('last_habit_update', DateTime.now().toIso8601String());
+  }
 }

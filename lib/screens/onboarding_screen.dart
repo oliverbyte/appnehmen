@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../services/storage_service.dart';
+import '../services/analytics_service.dart';
 import 'home_screen.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -16,6 +17,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   final _targetWeightController = TextEditingController();
   final _whyController = TextEditingController();
   final _storageService = StorageService();
+
+  @override
+  void initState() {
+    super.initState();
+    AnalyticsService.trackScreenView('onboarding');
+  }
 
   @override
   void dispose() {
