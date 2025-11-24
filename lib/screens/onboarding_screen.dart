@@ -238,9 +238,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     child: Column(
                       children: [
                         _buildTrustItem(
-                          icon: Icons.flag_outlined,
-                          text: 'Made in Germany',
-                          color: Colors.grey,
+                          icon: Icons.public,
+                          text: 'Made in Germany 🇩🇪',
+                          color: Colors.grey[700],
                         ),
                         const SizedBox(height: 8),
                         _buildTrustItem(
@@ -277,11 +277,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Widget _buildTrustItem({
     required IconData icon,
     required String text,
-    required MaterialColor color,
+    required dynamic color,
   }) {
+    final iconColor = color is MaterialColor ? color[700] : color;
+    
     return Row(
       children: [
-        Icon(icon, size: 18, color: color[700]),
+        Icon(icon, size: 18, color: iconColor),
         const SizedBox(width: 8),
         Expanded(
           child: Text(
