@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:js' as js;
+import 'package:confetti/confetti.dart';
 import '../services/storage_service.dart';
 import '../services/analytics_service.dart';
 import '../build_info.dart';
@@ -29,14 +30,22 @@ class _HomeScreenState extends State<HomeScreen> {
   Map<String, dynamic>? _userData;
   bool _isLoading = true;
   bool _updateAvailable = false;
+  late ConfettiController _confettiController;
 
   @override
   void initState() {
     super.initState();
+    _confettiController = ConfettiController(duration: const Duration(milliseconds: 1500));
     _loadUserData();
     _setupUpdateListener();
     _trackAppOpen();
     AnalyticsService.trackScreenView('home');
+  }
+  
+  @override
+  void dispose() {
+    _confettiController.dispose();
+    super.dispose();
   }
 
   @override
@@ -162,17 +171,28 @@ class _HomeScreenState extends State<HomeScreen> {
     if (result == true && weightController.text.isNotEmpty) {
       final normalizedText = weightController.text.replaceAll(',', '.');
       final weight = double.parse(normalizedText);
+      final oldWeight = _userData!['currentWeight'] as double;
+      
       await _storageService.addWeightEntry(weight);
       await _loadUserData();
       
       // Track weight update
       AnalyticsService.trackWeightUpdate();
       
+      // Fire confetti if new weight is lower than old weight
+      if (weight < oldWeight) {
+        _confettiController.play();
+      }
+      
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Gewicht gespeichert: ${_formatGermanNumber(weight, 1)} kg'),
-            backgroundColor: Colors.green[600],
+            content: Text(
+              weight < oldWeight 
+                ? '🎉 Glückwunsch! Neues Gewicht: ${_formatGermanNumber(weight, 1)} kg'
+                : 'Gewicht gespeichert: ${_formatGermanNumber(weight, 1)} kg'
+            ),
+            backgroundColor: weight < oldWeight ? Colors.green[700] : Colors.green[600],
             behavior: SnackBarBehavior.floating,
           ),
         );
@@ -262,13 +282,15 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
     return Scaffold(
-      body: Builder(
-        builder: (context) => Column(
-          children: [
-            // Update banner at top (if update available)
-            if (_updateAvailable) const UpdateBanner(),
-            // Install banner
-            const InstallBanner(),
+      body: Stack(
+        children: [
+          Builder(
+            builder: (context) => Column(
+              children: [
+                // Update banner at top (if update available)
+                if (_updateAvailable) const UpdateBanner(),
+                // Install banner
+                const InstallBanner(),
             // AppBar als Widget
             Container(
               color: Colors.green[700],
@@ -300,8 +322,28 @@ class _HomeScreenState extends State<HomeScreen> {
             Expanded(
               child: _buildMainContent(),
             ),
-          ],
-        ),
+              ],
+            ),
+          ),
+          // Confetti overlay
+          Align(
+            alignment: Alignment.topCenter,
+            child: ConfettiWidget(
+              confettiController: _confettiController,
+              blastDirectionality: BlastDirectionality.explosive,
+              shouldLoop: false,
+              colors: const [
+                Colors.green,
+                Colors.blue,
+                Colors.pink,
+                Colors.orange,
+                Colors.purple,
+              ],
+              numberOfParticles: 30,
+              gravity: 0.3,
+            ),
+          ),
+        ],
       ),
       drawer: Drawer(
         child: ListView(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:confetti/confetti.dart';
 import '../services/storage_service.dart';
 import '../services/analytics_service.dart';
 import 'package:intl/intl.dart';
@@ -16,12 +17,20 @@ class _HabitsScreenState extends State<HabitsScreen> {
   List<HabitCompletion> _completions = [];
   DateTime _selectedDate = DateTime.now();
   bool _isLoading = true;
+  late ConfettiController _confettiController;
 
   @override
   void initState() {
     super.initState();
+    _confettiController = ConfettiController(duration: const Duration(milliseconds: 1500));
     AnalyticsService.trackScreenView('habits');
     _loadData();
+  }
+  
+  @override
+  void dispose() {
+    _confettiController.dispose();
+    super.dispose();
   }
 
   Future<void> _loadData() async {
@@ -36,11 +45,17 @@ class _HabitsScreenState extends State<HabitsScreen> {
   }
 
   Future<void> _toggleHabit(String habitId) async {
+    final wasCompleted = _isCompletedToday(habitId);
     await _storageService.toggleHabitCompletion(habitId, _selectedDate);
     await _loadData();
     
     // Track habit toggle
     AnalyticsService.trackHabitToggle();
+    
+    // Fire confetti if habit was just completed (not uncompleted)
+    if (!wasCompleted) {
+      _confettiController.play();
+    }
   }
 
   bool _isCompletedToday(String habitId) {
@@ -149,9 +164,11 @@ class _HabitsScreenState extends State<HabitsScreen> {
         backgroundColor: Colors.green[700],
         foregroundColor: Colors.white,
       ),
-      body: _isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : Column(
+      body: Stack(
+        children: [
+          _isLoading
+              ? const Center(child: CircularProgressIndicator())
+              : Column(
               children: [
                 // Week overview
                 _buildWeekOverview(),
@@ -218,7 +235,27 @@ class _HabitsScreenState extends State<HabitsScreen> {
                         ),
                 ),
               ],
+                ),
+          // Confetti overlay
+          Align(
+            alignment: Alignment.topCenter,
+            child: ConfettiWidget(
+              confettiController: _confettiController,
+              blastDirectionality: BlastDirectionality.explosive,
+              shouldLoop: false,
+              colors: const [
+                Colors.green,
+                Colors.blue,
+                Colors.pink,
+                Colors.orange,
+                Colors.purple,
+              ],
+              numberOfParticles: 30,
+              gravity: 0.3,
             ),
+          ),
+        ],
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _showEditDialog(null),
         backgroundColor: Colors.green[700],
