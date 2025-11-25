@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../config/commit_id.dart';
+import '../build_info.dart';
 import '../services/analytics_service.dart';
 
 class InfoScreen extends StatelessWidget {
@@ -227,7 +227,7 @@ class InfoScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     Text(
-                      'Commit: $appCommitId',
+                      'Commit: $buildCommitId',
                       style: TextStyle(
                         fontSize: 12,
                         fontFamily: 'monospace',
