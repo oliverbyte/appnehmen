@@ -1,13 +1,19 @@
 import 'dart:js' as js;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
+import '../build_info.dart';
 
 class AnalyticsService {
   static const String _userIdKey = 'analytics_user_id';
   static String? _userId;
 
-  /// Initialize Mixpanel and set up anonymous user ID
+  /// Initialize Mixpanel and set up anonymous user ID (only in production builds)
   static Future<void> initialize() async {
+    if (!isProductionBuild) {
+      print('Analytics disabled - Development build');
+      return;
+    }
+    
     // Mixpanel is already initialized in index.html
     print('Mixpanel initialized via HTML');
     
@@ -34,6 +40,8 @@ class AnalyticsService {
 
   /// Track app open event with commit ID
   static Future<void> trackAppOpen({String? commitId}) async {
+    if (!isProductionBuild) return;
+    
     try {
       final properties = js.JsObject.jsify({
         'platform': 'web',
@@ -49,6 +57,8 @@ class AnalyticsService {
 
   /// Track custom event
   static Future<void> trackEvent(String eventName, {Map<String, dynamic>? properties}) async {
+    if (!isProductionBuild) return;
+    
     try {
       final jsProperties = properties != null 
         ? js.JsObject.jsify(properties)
@@ -63,11 +73,14 @@ class AnalyticsService {
 
   /// Track screen view
   static Future<void> trackScreenView(String screenName) async {
+    if (!isProductionBuild) return;
     await trackEvent('screen_view', properties: {'screen_name': screenName});
   }
 
   /// Set user property
   static Future<void> setUserProperty(String propertyName, dynamic value) async {
+    if (!isProductionBuild) return;
+    
     try {
       js.context['mixpanel']['people'].callMethod('set', [propertyName, value]);
       print('Set user property: $propertyName = $value');
@@ -78,12 +91,14 @@ class AnalyticsService {
 
   /// Track weight update (without actual weight value for privacy)
   static Future<void> trackWeightUpdate() async {
+    if (!isProductionBuild) return;
     await trackEvent('weight_updated');
     await setUserProperty('last_weight_update', DateTime.now().toIso8601String());
   }
 
   /// Track habit toggle (without habit details for privacy)
   static Future<void> trackHabitToggle() async {
+    if (!isProductionBuild) return;
     await trackEvent('habit_toggled');
     await setUserProperty('last_habit_update', DateTime.now().toIso8601String());
   }
