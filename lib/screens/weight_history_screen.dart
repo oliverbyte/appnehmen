@@ -189,7 +189,13 @@ class _WeightHistoryScreenState extends State<WeightHistoryScreen> {
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: Colors.grey[300]!),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withValues(alpha: 0.1),
+                      blurRadius: 8,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
                 ),
                 child: LineChart(
                   LineChartData(
@@ -245,8 +251,7 @@ class _WeightHistoryScreenState extends State<WeightHistoryScreen> {
                       ),
                     ),
                     borderData: FlBorderData(
-                      show: true,
-                      border: Border.all(color: Colors.grey[300]!),
+                      show: false,
                     ),
                     lineBarsData: [
                       LineChartBarData(
