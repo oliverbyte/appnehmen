@@ -75,6 +75,9 @@ class UpdateManager {
 
     console.log('Applying update - reloading to activate new version...');
     
+    // Set flag to redirect to news page after reload
+    sessionStorage.setItem('showNewsAfterUpdate', 'true');
+    
     // Send message to new Service Worker to activate immediately
     this.waitingWorker.postMessage({ type: 'SKIP_WAITING' });
     

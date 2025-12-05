@@ -66,9 +66,31 @@ class _HomeScreenState extends State<HomeScreen> {
     // Show tip after build, but only if we're on the home screen
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
+        _checkForNewsRedirect();
         TipDialog.showTipIfAvailable(context);
       }
     });
+  }
+
+  void _checkForNewsRedirect() {
+    // Check if we should redirect to news page after update
+    final shouldShowNews = js.context.callMethod('eval', [
+      'sessionStorage.getItem("showNewsAfterUpdate")'
+    ]);
+    
+    if (shouldShowNews == 'true') {
+      // Clear the flag
+      js.context.callMethod('eval', [
+        'sessionStorage.removeItem("showNewsAfterUpdate")'
+      ]);
+      
+      // Navigate to news screen
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => const NewsScreen(),
+        ),
+      );
+    }
   }
 
   void _setupUpdateListener() {
