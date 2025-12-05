@@ -164,6 +164,11 @@ class StorageService {
     await prefs.setString(_keyWhy, why);
   }
 
+  Future<void> updateTargetWeight(double targetWeight) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setDouble(_keyTargetWeight, targetWeight);
+  }
+
   Future<void> clearData() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.clear();

@@ -12,6 +12,7 @@ import 'weight_history_screen.dart';
 import 'info_screen.dart';
 import 'help_screen.dart';
 import 'habits_screen.dart';
+import 'news_screen.dart';
 
 // Helper function to format numbers with German comma
 String _formatGermanNumber(double number, int decimalPlaces) {
@@ -108,7 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final result = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Neues Gewicht eingeben'),
+        title: const Text('Neues Gewicht eintragen'),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -259,6 +260,98 @@ class _HomeScreenState extends State<HomeScreen> {
           SnackBar(
             content: const Text('Dein Warum wurde aktualisiert'),
             backgroundColor: Colors.purple[600],
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
+      }
+    }
+  }
+
+  Future<void> _showEditTargetWeightDialog() async {
+    final targetWeightController = TextEditingController(
+      text: _formatGermanNumber(_userData!['targetWeight'] as double, 1),
+    );
+    
+    final result = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Zielgewicht bearbeiten'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              controller: targetWeightController,
+              keyboardType: TextInputType.text,
+              decoration: const InputDecoration(
+                labelText: 'Zielgewicht (kg)',
+                hintText: 'z.B. 70,0',
+                border: OutlineInputBorder(),
+                prefixIcon: Icon(Icons.flag),
+              ),
+              autofocus: true,
+            ),
+            const SizedBox(height: 12),
+            Text(
+              'Deine Gewichtseingaben bleiben erhalten',
+              style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            style: TextButton.styleFrom(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+            ),
+            child: const Text(
+              'Abbrechen',
+              style: TextStyle(fontWeight: FontWeight.w500),
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              final normalizedText = targetWeightController.text.replaceAll(',', '.');
+              final weight = double.tryParse(normalizedText);
+              if (weight != null && weight > 0 && weight < 500) {
+                Navigator.of(context).pop(true);
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: const Text('Bitte gib ein gültiges Gewicht ein'),
+                    behavior: SnackBarBehavior.floating,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  ),
+                );
+              }
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.green[600],
+              foregroundColor: Colors.white,
+              elevation: 0,
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            ),
+            child: const Text(
+              'Speichern',
+              style: TextStyle(fontWeight: FontWeight.w600),
+            ),
+          ),
+        ],
+      ),
+    );
+
+    if (result == true && targetWeightController.text.isNotEmpty) {
+      final normalizedText = targetWeightController.text.replaceAll(',', '.');
+      final newTargetWeight = double.parse(normalizedText);
+      
+      await _storageService.updateTargetWeight(newTargetWeight);
+      await _loadUserData();
+      
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Zielgewicht aktualisiert: ${_formatGermanNumber(newTargetWeight, 1)} kg'),
+            backgroundColor: Colors.green[600],
             behavior: SnackBarBehavior.floating,
           ),
         );
@@ -471,14 +564,6 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ),
             ListTile(
-              leading: Icon(Icons.add_circle_outline, color: Colors.green[700]),
-              title: const Text('Gewicht hinzufügen'),
-              onTap: () {
-                Navigator.of(context).pop();
-                _showAddWeightDialog();
-              },
-            ),
-            ListTile(
               leading: Icon(Icons.check_circle_outline, color: Colors.teal[700]),
               title: const Text('Gewohnheiten'),
               onTap: () {
@@ -503,6 +588,18 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ),
             const Divider(),
+            ListTile(
+              leading: Icon(Icons.new_releases, color: Colors.purple[600]),
+              title: const Text('Was ist neu?'),
+              onTap: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const NewsScreen(),
+                  ),
+                );
+              },
+            ),
             ListTile(
               leading: Icon(Icons.help_outline, color: Colors.blue[600]),
               title: const Text('Hilfe'),
@@ -712,6 +809,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               _buildWeightInfo(
                                 'Ziel',
                                 _formatGermanNumber(_userData!['targetWeight'] as double, 1),
+                                onTap: _showEditTargetWeightDialog,
                               ),
                             ],
                           ),
@@ -722,7 +820,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               onPressed: _showAddWeightDialog,
                               icon: const Icon(Icons.add, size: 22),
                               label: const Text(
-                                'Gewicht hinzufügen',
+                                'Neues Gewicht eintragen',
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,
@@ -846,8 +944,8 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildWeightInfo(String label, String value) {
-    return Column(
+  Widget _buildWeightInfo(String label, String value, {VoidCallback? onTap}) {
+    final content = Column(
       children: [
         Text(
           label,
@@ -858,16 +956,42 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         const SizedBox(height: 4),
-        Text(
-          '$value kg',
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-            color: Colors.green[900],
-          ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              '$value kg',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Colors.green[900],
+              ),
+            ),
+            if (onTap != null) ...[
+              const SizedBox(width: 4),
+              Icon(
+                Icons.edit,
+                size: 16,
+                color: Colors.green[600],
+              ),
+            ],
+          ],
         ),
       ],
     );
+
+    if (onTap != null) {
+      return InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(8),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: content,
+        ),
+      );
+    }
+    
+    return content;
   }
 
   Widget _buildMainSectionWithSubtext({

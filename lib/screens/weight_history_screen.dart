@@ -20,6 +20,7 @@ class _WeightHistoryScreenState extends State<WeightHistoryScreen> {
   final _storageService = StorageService();
   List<WeightEntry> _history = [];
   double? _targetWeight;
+  double? _currentWeight;
   bool _isLoading = true;
 
   @override
@@ -35,8 +36,95 @@ class _WeightHistoryScreenState extends State<WeightHistoryScreen> {
     setState(() {
       _history = history;
       _targetWeight = userData?['targetWeight'] as double?;
+      _currentWeight = userData?['currentWeight'] as double?;
       _isLoading = false;
     });
+  }
+
+  Future<void> _showAddWeightDialog() async {
+    final weightController = TextEditingController();
+    
+    final result = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Neues Gewicht eintragen'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              controller: weightController,
+              keyboardType: TextInputType.text,
+              decoration: const InputDecoration(
+                labelText: 'Gewicht (kg)',
+                hintText: 'z.B. 75,5',
+                border: OutlineInputBorder(),
+                prefixIcon: Icon(Icons.monitor_weight),
+              ),
+              autofocus: true,
+            ),
+            if (_currentWeight != null) ...[
+              const SizedBox(height: 12),
+              Text(
+                'Dein aktuelles Gewicht: ${_formatGermanNumber(_currentWeight!, 1)} kg',
+                style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+              ),
+            ],
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('Abbrechen'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              final normalizedText = weightController.text.replaceAll(',', '.');
+              final weight = double.tryParse(normalizedText);
+              if (weight != null && weight > 0 && weight < 500) {
+                Navigator.of(context).pop(true);
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: const Text('Bitte gib ein gültiges Gewicht ein'),
+                    behavior: SnackBarBehavior.floating,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  ),
+                );
+              }
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.green[600],
+              foregroundColor: Colors.white,
+              elevation: 0,
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            ),
+            child: const Text(
+              'Speichern',
+              style: TextStyle(fontWeight: FontWeight.w600),
+            ),
+          ),
+        ],
+      ),
+    );
+
+    if (result == true && weightController.text.isNotEmpty) {
+      final normalizedText = weightController.text.replaceAll(',', '.');
+      final weight = double.parse(normalizedText);
+      
+      await _storageService.addWeightEntry(weight);
+      await _loadData();
+      
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Gewicht gespeichert: ${_formatGermanNumber(weight, 1)} kg'),
+            backgroundColor: Colors.green[600],
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
+      }
+    }
   }
 
   @override
@@ -189,6 +277,31 @@ class _WeightHistoryScreenState extends State<WeightHistoryScreen> {
                           dotData: const FlDotData(show: false),
                         ),
                     ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 24),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton.icon(
+                  onPressed: _showAddWeightDialog,
+                  icon: const Icon(Icons.add, size: 22),
+                  label: const Text(
+                    'Neues Gewicht eintragen',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: -0.3,
+                    ),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green[600],
+                    foregroundColor: Colors.white,
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    padding: const EdgeInsets.symmetric(vertical: 16),
                   ),
                 ),
               ),

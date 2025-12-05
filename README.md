@@ -6,10 +6,24 @@ Eine Progressive Web App (PWA) zur Unterstützung beim Abnehmen – mit lokaler 
 
 **Appnehmen** ist eine minimalistische PWA, die dir mit einfachen aber wirksamen Werkzeugen beim Abnehmen hilft:
 
+### Screenshots
+
+<p align="center">
+  <img src="screenshots/startseite.png" alt="Startseite" width="280" />
+  <img src="screenshots/gewichtsverlauf.png" alt="Gewichtsverlauf" width="280" />
+  <img src="screenshots/gewohnheiten.png" alt="Gewohnheiten-Tracker" width="280" />
+</p>
+
+### Features
+
 - 📊 **Gewichtsverfolgung**: Verfolge deinen Fortschritt mit grafischer Auswertung
-- ✅ **Gewohnheiten-Tracker**: Verfolge tägliche Gewohnheiten mit Wochen-Übersicht
+- 🎯 **Zielgewicht anpassen**: Ändere dein Zielgewicht jederzeit, ohne Daten zu verlieren
+- ✅ **Gewohnheiten-Tracker**: Verfolge tägliche Gewohnheiten mit Wochen-Übersicht und farbigem Fortschritt
+- 🎉 **Konfetti-Feiern**: Kleine Belohnungen bei Erfolgen
+- 💡 **Tägliche Tipps**: Hilfreiche Tipps zum Abnehmen (max. 1 pro Tag)
 - 💪 **Dein Warum**: Bleib motiviert durch dein persönliches "Warum"
 - 🚨 **Heißhunger-Notfall**: Strukturierte Hilfe bei akuten Heißhunger-Momenten
+- 🔔 **Was ist neu?**: Übersicht aller Änderungen und neuen Funktionen
 - 🔒 **100% Privat**: Alle Daten bleiben lokal auf deinem Gerät
 
 ### Entstehungsgeschichte
@@ -61,28 +75,46 @@ Ich habe selbst 45 Kilo abgenommen und teile mit dieser App die kleinen aber wir
 
 ### Gewichtsverfolgung
 - Eingabe neuer Gewichtsmessungen (mit deutscher Komma-Unterstützung: 75,5 kg)
-- Grafische Darstellung des Verlaufs
+- Button zum Eintragen direkt im Gewichtsverlauf-Tab
+- Grafische Darstellung des Verlaufs mit Zielgewicht-Linie
 - Statistiken: Startgewicht, aktuelles Gewicht, verlorene Kilos
 - Chronologische Liste aller Einträge
+- Zielgewicht jederzeit anpassbar (Klick auf Ziel-Anzeige)
+- Konfetti-Animation bei Gewichtsverlust
 
 ### Gewohnheiten-Tracker
 - Tägliches Tracking von gesunden Gewohnheiten
 - 3 Standard-Gewohnheiten voreingestellt:
   - Tägliches Workout (2 Runden à 30x Übungen)
-  - Nur 3 Hauptmahlzeiten (maximal handtellergroß, keine Snacks)
+  - Nur 3 Hauptmahlzeiten (maximal handtellergroß, keine Snacks, abends keine Kohlenhydrate)
   - 30 Minuten Bewegung (Walken, Fahrrad, Joggen)
 - Eigene Gewohnheiten hinzufügen und editieren
-- Wöchentliche Übersicht: Grüne Tage zeigen erfolgreiche Tage
+- Wöchentliche Übersicht mit Fortschritts-Farbverlauf (je grüner, desto besser)
+- Tag-Auswahl mit visueller Hervorhebung des ausgewählten Tags
 - Simple Checkbox-Ansicht für den aktuellen Tag
+- Konfetti-Animation bei abgeschlossener Gewohnheit
 
 ### Heißhunger-Notfall
 - **Schritt 1**: Trinke 2 Gläser Wasser
 - **Schritt 2**: Warte 10 Minuten (mit Timer)
 - Strukturierte Hilfe für kritische Momente
 
+### Tägliche Tipps
+- Maximal ein Tipp pro Tag
+- Hilfreiche Ratschläge zum Abnehmen
+- Automatische Anzeige beim Betreten der Startseite
+
+### Was ist neu?
+- Übersicht aller Änderungen und neuen Funktionen
+- Gruppiert nach Monat
+- Nutzerfreundliche Beschreibungen
+
 ### Burger-Menü
 - Navigation zu allen Hauptfunktionen
+- Gewichtsverlauf, Gewohnheiten, Heißhunger-Notfall
+- Hilfe-Seite mit Installationsanleitung
 - Info-Seite mit Hintergrundinfos zur App
+- Was ist neu? mit allen Änderungen
 
 ## 🔐 Datenschutz
 

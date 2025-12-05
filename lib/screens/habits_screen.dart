@@ -315,6 +315,9 @@ class _HabitsScreenState extends State<HabitsScreen> {
               final isToday = date.day == now.day && 
                               date.month == now.month && 
                               date.year == now.year;
+              final isSelected = date.day == _selectedDate.day && 
+                                 date.month == _selectedDate.month && 
+                                 date.year == _selectedDate.year;
               final isFuture = date.isAfter(now);
               
               return FutureBuilder<double>(
@@ -326,6 +329,8 @@ class _HabitsScreenState extends State<HabitsScreen> {
                   // Calculate green shade based on completion percentage
                   Color bgColor;
                   Color textColor;
+                  Color borderColor;
+                  double borderWidth;
                   
                   if (isFuture) {
                     bgColor = Colors.grey[300]!;
@@ -355,6 +360,18 @@ class _HabitsScreenState extends State<HabitsScreen> {
                     textColor = percentage >= 0.6 ? Colors.white : Colors.green[900]!;
                   }
                   
+                  // Determine border style based on selection and today
+                  if (isSelected) {
+                    borderColor = Colors.green[300]!;
+                    borderWidth = 2.5;
+                  } else if (isToday) {
+                    borderColor = Colors.orange;
+                    borderWidth = 2;
+                  } else {
+                    borderColor = Colors.green[300]!;
+                    borderWidth = 1;
+                  }
+                  
                   return GestureDetector(
                     onTap: isFuture ? null : () {
                       setState(() => _selectedDate = date);
@@ -366,8 +383,8 @@ class _HabitsScreenState extends State<HabitsScreen> {
                         color: bgColor,
                         borderRadius: BorderRadius.circular(8),
                         border: Border.all(
-                          color: isToday ? Colors.orange : Colors.green[300]!,
-                          width: isToday ? 3 : 1,
+                          color: borderColor,
+                          width: borderWidth,
                         ),
                       ),
                       child: Column(
