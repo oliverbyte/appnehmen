@@ -197,10 +197,10 @@ class HelpScreen extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 16),
-                    _buildBenefit('📱', 'App erscheint wie eine normale App auf deinem Handy'),
-                    _buildBenefit('⚡', 'Schneller Start - kein Browser nötig'),
-                    _buildBenefit('🔒', 'Alle Daten bleiben sicher auf deinem Gerät'),
-                    _buildBenefit('📶', 'Funktioniert auch ohne Internet'),
+                    _buildBenefit(Icons.phone_android, 'App erscheint wie eine normale App auf deinem Handy'),
+                    _buildBenefit(Icons.flash_on, 'Schneller Start - kein Browser nötig'),
+                    _buildBenefit(Icons.lock, 'Alle Daten bleiben sicher auf deinem Gerät'),
+                    _buildBenefit(Icons.cloud_off, 'Funktioniert auch ohne Internet'),
                   ],
                 ),
               ),
@@ -253,15 +253,16 @@ class HelpScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildBenefit(String emoji, String text) {
+  Widget _buildBenefit(IconData icon, String text) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            emoji,
-            style: const TextStyle(fontSize: 20),
+          Icon(
+            icon,
+            color: Colors.green[700],
+            size: 20,
           ),
           const SizedBox(width: 12),
           Expanded(
