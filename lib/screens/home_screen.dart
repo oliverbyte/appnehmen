@@ -67,29 +67,40 @@ class _HomeScreenState extends State<HomeScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
         _checkForNewsRedirect();
-        TipDialog.showTipIfAvailable(context);
       }
     });
   }
 
   void _checkForNewsRedirect() {
     // Check if we should redirect to news page after update
-    final shouldShowNews = js.context.callMethod('eval', [
-      'sessionStorage.getItem("showNewsAfterUpdate")'
-    ]);
-    
-    if (shouldShowNews == 'true') {
-      // Clear the flag
-      js.context.callMethod('eval', [
-        'sessionStorage.removeItem("showNewsAfterUpdate")'
+    try {
+      final shouldShowNews = js.context.callMethod('eval', [
+        'sessionStorage.getItem("showNewsAfterUpdate")'
       ]);
       
-      // Navigate to news screen
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => const NewsScreen(),
-        ),
-      );
+      if (shouldShowNews == 'true') {
+        // Clear the flag first
+        js.context.callMethod('eval', [
+          'sessionStorage.removeItem("showNewsAfterUpdate")'
+        ]);
+        
+        // Navigate to news screen with a slight delay to ensure context is ready
+        Future.delayed(const Duration(milliseconds: 500), () {
+          if (mounted) {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => const NewsScreen(),
+              ),
+            );
+          }
+        });
+      } else {
+        // Only show tip if we're not redirecting to news
+        TipDialog.showTipIfAvailable(context);
+      }
+    } catch (e) {
+      // Fallback: show tip if there's an error
+      TipDialog.showTipIfAvailable(context);
     }
   }
 
