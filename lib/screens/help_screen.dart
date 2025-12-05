@@ -46,23 +46,23 @@ class HelpScreen extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: Colors.blue[50],
+                  color: Colors.green[50],
                   borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: Colors.blue[200]!),
+                  border: Border.all(color: Colors.green[200]!),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       children: [
-                        Icon(Icons.lightbulb_outline, color: Colors.blue[700], size: 28),
+                        Icon(Icons.lightbulb_outline, color: Colors.green[700], size: 28),
                         const SizedBox(width: 12),
                         Text(
                           'Wichtiger Tipp',
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
-                            color: Colors.blue[900],
+                            color: Colors.green[900],
                           ),
                         ),
                       ],
@@ -113,23 +113,23 @@ class HelpScreen extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: Colors.blue[50],
+                  color: Colors.green[50],
                   borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: Colors.blue[200]!),
+                  border: Border.all(color: Colors.green[200]!),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       children: [
-                        Icon(Icons.apple, color: Colors.blue[700], size: 28),
+                        Icon(Icons.apple, color: Colors.green[700], size: 28),
                         const SizedBox(width: 12),
                         Text(
                           'iPhone/iPad',
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
-                            color: Colors.blue[900],
+                            color: Colors.green[900],
                           ),
                         ),
                       ],
@@ -144,23 +144,23 @@ class HelpScreen extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: Colors.orange[50],
+                  color: Colors.green[50],
                   borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: Colors.orange[200]!),
+                  border: Border.all(color: Colors.green[200]!),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       children: [
-                        Icon(Icons.laptop, color: Colors.orange[700], size: 28),
+                        Icon(Icons.laptop, color: Colors.green[700], size: 28),
                         const SizedBox(width: 12),
                         Text(
                           'Chrome/Edge (PC)',
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
-                            color: Colors.orange[900],
+                            color: Colors.green[900],
                           ),
                         ),
                       ],
@@ -175,23 +175,23 @@ class HelpScreen extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: Colors.orange[50],
+                  color: Colors.green[50],
                   borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: Colors.orange[200]!),
+                  border: Border.all(color: Colors.green[200]!),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       children: [
-                        Icon(Icons.info_outline, color: Colors.orange[700], size: 28),
+                        Icon(Icons.info_outline, color: Colors.green[700], size: 28),
                         const SizedBox(width: 12),
                         Text(
                           'Warum installieren?',
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
-                            color: Colors.orange[900],
+                            color: Colors.green[900],
                           ),
                         ),
                       ],

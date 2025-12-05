@@ -84,23 +84,23 @@ class InfoScreen extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: Colors.purple[50],
+                  color: Colors.green[50],
                   borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: Colors.purple[200]!),
+                  border: Border.all(color: Colors.green[200]!),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       children: [
-                        Icon(Icons.privacy_tip, color: Colors.purple[700], size: 28),
+                        Icon(Icons.privacy_tip, color: Colors.green[700], size: 28),
                         const SizedBox(width: 12),
                         Text(
                           'Datenschutz',
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
-                            color: Colors.purple[900],
+                            color: Colors.green[900],
                           ),
                         ),
                       ],
@@ -120,23 +120,23 @@ class InfoScreen extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: Colors.amber[50],
+                  color: Colors.green[50],
                   borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: Colors.amber[200]!),
+                  border: Border.all(color: Colors.green[200]!),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       children: [
-                        Icon(Icons.info_outline, color: Colors.amber[700], size: 28),
+                        Icon(Icons.info_outline, color: Colors.green[700], size: 28),
                         const SizedBox(width: 12),
                         Text(
                           'Wichtiger Hinweis',
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
-                            color: Colors.amber[900],
+                            color: Colors.green[900],
                           ),
                         ),
                       ],
@@ -156,23 +156,23 @@ class InfoScreen extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: Colors.orange[50],
+                  color: Colors.green[50],
                   borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: Colors.orange[200]!),
+                  border: Border.all(color: Colors.green[200]!),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       children: [
-                        Icon(Icons.email, color: Colors.orange[700], size: 28),
+                        Icon(Icons.email, color: Colors.green[700], size: 28),
                         const SizedBox(width: 12),
                         Text(
                           'Feedback & Anregungen',
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
-                            color: Colors.orange[900],
+                            color: Colors.green[900],
                           ),
                         ),
                       ],
@@ -196,14 +196,14 @@ class InfoScreen extends StatelessWidget {
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Icon(Icons.email_outlined, color: Colors.orange[700], size: 20),
+                          Icon(Icons.email_outlined, color: Colors.green[700], size: 20),
                           const SizedBox(width: 8),
                           Text(
                             'info@oliverbyte.de',
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
-                              color: Colors.orange[900],
+                              color: Colors.green[900],
                               decoration: TextDecoration.underline,
                             ),
                           ),
