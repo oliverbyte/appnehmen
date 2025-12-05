@@ -201,6 +201,23 @@ class _WeightHistoryScreenState extends State<WeightHistoryScreen> {
                   LineChartData(
                     minY: chartMinY,
                     maxY: chartMaxY,
+                    lineTouchData: LineTouchData(
+                      touchTooltipData: LineTouchTooltipData(
+                        getTooltipColor: (touchedSpot) => Colors.grey[800]!,
+                        getTooltipItems: (List<LineBarSpot> touchedSpots) {
+                          return touchedSpots.map((LineBarSpot touchedSpot) {
+                            return LineTooltipItem(
+                              _formatGermanNumber(touchedSpot.y, 1),
+                              const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                              ),
+                            );
+                          }).toList();
+                        },
+                      ),
+                    ),
                     gridData: FlGridData(
                       show: true,
                       drawVerticalLine: false,
