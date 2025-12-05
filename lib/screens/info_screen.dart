@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../build_info.dart';
 import '../services/analytics_service.dart';
+import '../services/apple_health_export_service.dart';
 
 class InfoScreen extends StatelessWidget {
   const InfoScreen({super.key});
@@ -217,6 +218,99 @@ class InfoScreen extends StatelessWidget {
                         fontSize: 14,
                         fontStyle: FontStyle.italic,
                         color: Colors.grey[600],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 24),
+              Container(
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: Colors.green[50],
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: Colors.green[200]!),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(Icons.favorite, color: Colors.green[700], size: 28),
+                        const SizedBox(width: 12),
+                        Text(
+                          'Apple Health Export',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.green[900],
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    const Text(
+                      'Exportiere deine Gewichtsdaten als CSV-Datei, um sie in Apple Health zu importieren.',
+                      style: TextStyle(
+                        fontSize: 16,
+                        height: 1.6,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton.icon(
+                        onPressed: () async {
+                          try {
+                            await AppleHealthExportService.exportToAppleHealth();
+                            if (context.mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: const Text('Gewichtsdaten als CSV exportiert'),
+                                  backgroundColor: Colors.green[600],
+                                  behavior: SnackBarBehavior.floating,
+                                ),
+                              );
+                            }
+                          } catch (e) {
+                            if (context.mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text('Fehler beim Export: $e'),
+                                  backgroundColor: Colors.red[600],
+                                  behavior: SnackBarBehavior.floating,
+                                ),
+                              );
+                            }
+                          }
+                        },
+                        icon: const Icon(Icons.file_download, size: 20),
+                        label: const Text(
+                          'Gewichtsdaten exportieren',
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.green[600],
+                          foregroundColor: Colors.white,
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          padding: const EdgeInsets.symmetric(vertical: 14),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    Text(
+                      'Hinweis: Nach dem Export kannst du die CSV-Datei mit einer App wie "Health CSV Importer" in Apple Health importieren.',
+                      style: TextStyle(
+                        fontSize: 13,
+                        fontStyle: FontStyle.italic,
+                        color: Colors.grey[600],
+                        height: 1.4,
                       ),
                     ),
                   ],
