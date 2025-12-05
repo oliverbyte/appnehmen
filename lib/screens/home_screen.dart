@@ -585,7 +585,7 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ),
             ListTile(
-              leading: Icon(Icons.show_chart, color: Colors.green[600]),
+              leading: Icon(Icons.show_chart, color: Colors.green[700]),
               title: const Text('Gewichtsverlauf'),
               onTap: () {
                 Navigator.of(context).pop();
@@ -597,7 +597,7 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ),
             ListTile(
-              leading: Icon(Icons.check_circle_outline, color: Colors.teal[700]),
+              leading: Icon(Icons.check_circle_outline, color: Colors.green[700]),
               title: const Text('Gewohnheiten'),
               onTap: () {
                 Navigator.of(context).pop();
@@ -609,7 +609,7 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ),
             ListTile(
-              leading: Icon(Icons.sos, color: Colors.orange[600]),
+              leading: Icon(Icons.sos, color: Colors.green[700]),
               title: const Text('Heißhunger-Notfall'),
               onTap: () {
                 Navigator.of(context).pop();
@@ -622,7 +622,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const Divider(),
             ListTile(
-              leading: Icon(Icons.new_releases, color: Colors.purple[600]),
+              leading: Icon(Icons.new_releases, color: Colors.green[700]),
               title: const Text('Was ist neu?'),
               onTap: () {
                 Navigator.of(context).pop();
@@ -634,7 +634,7 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ),
             ListTile(
-              leading: Icon(Icons.help_outline, color: Colors.blue[600]),
+              leading: Icon(Icons.help_outline, color: Colors.green[700]),
               title: const Text('Hilfe'),
               onTap: () {
                 Navigator.of(context).pop();
@@ -646,7 +646,7 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ),
             ListTile(
-              leading: Icon(Icons.info_outline, color: Colors.grey[700]),
+              leading: Icon(Icons.info_outline, color: Colors.green[700]),
               title: const Text('Info'),
               onTap: () {
                 Navigator.of(context).pop();
