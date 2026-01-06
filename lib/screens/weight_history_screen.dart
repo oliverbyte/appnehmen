@@ -169,6 +169,43 @@ class _WeightHistoryScreenState extends State<WeightHistoryScreen> {
     final chartMinY = (minWeight - weightRange * 0.1).floorToDouble();
     final chartMaxY = (maxWeight + weightRange * 0.1).ceilToDouble();
 
+    // Calculate trend line using linear regression
+    List<FlSpot> trendSpots = [];
+    Color trendColor = Colors.grey;
+    
+    if (_history.length >= 2) {
+      final n = _history.length;
+      double sumX = 0, sumY = 0, sumXY = 0, sumXX = 0;
+      
+      for (int i = 0; i < n; i++) {
+        final x = i.toDouble();
+        final y = _history[i].weight;
+        sumX += x;
+        sumY += y;
+        sumXY += x * y;
+        sumXX += x * x;
+      }
+      
+      final slope = (n * sumXY - sumX * sumY) / (n * sumXX - sumX * sumX);
+      final intercept = (sumY - slope * sumX) / n;
+      
+      // Generate trend line points
+      trendSpots = [
+        FlSpot(0, intercept),
+        FlSpot(n - 1, slope * (n - 1) + intercept),
+      ];
+      
+      // Determine trend color based on slope
+      const threshold = 0.05; // kg per entry threshold for "neutral"
+      if (slope.abs() < threshold) {
+        trendColor = Colors.grey[600]!; // Neutral
+      } else if (slope > 0) {
+        trendColor = Colors.red[600]!; // Increasing (bad)
+      } else {
+        trendColor = Colors.green[600]!; // Decreasing (good)
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Gewichtsverlauf'),
@@ -290,6 +327,16 @@ class _WeightHistoryScreenState extends State<WeightHistoryScreen> {
                           color: Colors.green[100]!.withValues(alpha: 0.3),
                         ),
                       ),
+                      // Trend line
+                      if (trendSpots.isNotEmpty)
+                        LineChartBarData(
+                          spots: trendSpots,
+                          isCurved: false,
+                          color: trendColor,
+                          barWidth: 4,
+                          dotData: const FlDotData(show: false),
+                          dashArray: [8, 4],
+                        ),
                       if (_targetWeight != null)
                         LineChartBarData(
                           spots: [

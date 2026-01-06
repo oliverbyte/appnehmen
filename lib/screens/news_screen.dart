@@ -27,6 +27,17 @@ class _NewsScreenState extends State<NewsScreen> {
         padding: const EdgeInsets.all(16),
         children: [
           _buildNewsSection(
+            'Januar 2026',
+            [
+              _NewsItem(
+                icon: Icons.show_chart,
+                title: 'Trendlinie im Gewichtsdiagramm',
+                description: 'Eine deutlich sichtbare Trendlinie zeigt die Gewichtsentwicklung: Grau bei neutralem Verlauf, Rot bei Gewichtszunahme, Grün bei Gewichtsabnahme.',
+              ),
+            ],
+          ),
+          const SizedBox(height: 24),
+          _buildNewsSection(
             'Dezember 2025',
             [
               _NewsItem(

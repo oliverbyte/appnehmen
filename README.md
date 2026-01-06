@@ -16,7 +16,7 @@ Eine Progressive Web App (PWA) zur Unterstützung beim Abnehmen – mit lokaler 
 
 ### Features
 
-- 📊 **Gewichtsverfolgung**: Verfolge deinen Fortschritt mit grafischer Auswertung
+- 📊 **Gewichtsverfolgung**: Verfolge deinen Fortschritt mit grafischer Auswertung und farbiger Trendlinie
 - 🎯 **Zielgewicht anpassen**: Ändere dein Zielgewicht jederzeit, ohne Daten zu verlieren
 - ✅ **Gewohnheiten-Tracker**: Verfolge tägliche Gewohnheiten mit Wochen-Übersicht und farbigem Fortschritt
 - 🎉 **Konfetti-Feiern**: Kleine Belohnungen bei Erfolgen
@@ -77,6 +77,7 @@ Ich habe selbst 45 Kilo abgenommen und teile mit dieser App die kleinen aber wir
 - Eingabe neuer Gewichtsmessungen (mit deutscher Komma-Unterstützung: 75,5 kg)
 - Button zum Eintragen direkt im Gewichtsverlauf-Tab
 - Grafische Darstellung des Verlaufs mit Zielgewicht-Linie
+- Deutlich sichtbare Trendlinie: Grau bei neutralem Verlauf, Rot bei Gewichtszunahme, Grün bei Gewichtsabnahme
 - Statistiken: Startgewicht, aktuelles Gewicht, verlorene Kilos
 - Chronologische Liste aller Einträge
 - Zielgewicht jederzeit anpassbar (Klick auf Ziel-Anzeige)
