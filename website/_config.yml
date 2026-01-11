@@ -1,0 +1,59 @@
+# Site settings
+title: "Appnehmen - Dein digitaler Abnehmhelfer"
+description: "Minimaler, lokaler Abnehm-Tracker und Heißhunger-Helfer. Keine Cloud, keine Anmeldung, keine komplizierten Features. Einfach abnehmen."
+baseurl: "/appnehmen/info"
+url: "https://oliverbyte.github.io"
+lang: de
+author: Oliver Byte
+
+# SEO
+logo: /assets/images/logo.png
+twitter:
+  card: summary
+  
+google_site_verification: ""
+
+# Social
+social:
+  name: Appnehmen
+  links:
+    - https://github.com/oliverbyte/appnehmen
+
+# Jekyll settings
+permalink: pretty
+markdown: kramdown
+highlighter: rouge
+
+# Theme
+remote_theme: pages-themes/minimal@v0.2.0
+
+# Plugins
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-remote-theme
+
+# Exclude from build
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - LICENSE
+  - .gitignore
+  - node_modules
+  - vendor
+
+# Collections
+collections:
+  pages:
+    output: true
+    permalink: /:name/
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default
+      lang: de
