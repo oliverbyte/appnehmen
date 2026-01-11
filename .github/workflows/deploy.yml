@@ -77,21 +77,18 @@ jobs:
           sed -i "s/const CACHE_NAME = 'appnehmen-cache-v[^']*'/const CACHE_NAME = 'appnehmen-cache-v$COMMIT_ID'/" build/web/service_worker.js
 
       - name: Setup Ruby for Jekyll
-        if: needs.detect-changes.outputs.website == 'true'
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.1'
           bundler-cache: false
 
       - name: Install Jekyll and dependencies
-        if: needs.detect-changes.outputs.website == 'true'
         run: |
           cd website
           gem install bundler
           bundle install
 
       - name: Build Jekyll website
-        if: needs.detect-changes.outputs.website == 'true'
         run: |
           cd website
           bundle exec jekyll build --destination ../build/web/info
