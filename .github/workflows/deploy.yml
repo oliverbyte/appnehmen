@@ -47,18 +47,15 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Setup Flutter
-        if: needs.detect-changes.outputs.app == 'true'
         uses: subosito/flutter-action@v2
         with:
           channel: stable
           cache: true
 
       - name: Install dependencies
-        if: needs.detect-changes.outputs.app == 'true'
         run: flutter pub get
 
       - name: Generate build info
-        if: needs.detect-changes.outputs.app == 'true'
         run: |
           COMMIT_ID=$(git rev-parse --short HEAD)
           TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
@@ -72,38 +69,12 @@ jobs:
           EOF
 
       - name: Build web
-        if: needs.detect-changes.outputs.app == 'true'
         run: flutter build web --release --base-href "/appnehmen/"
 
       - name: Update Service Worker cache version
-        if: needs.detect-changes.outputs.app == 'true'
         run: |
           COMMIT_ID=$(git rev-parse --short HEAD)
           sed -i "s/const CACHE_NAME = 'appnehmen-cache-v[^']*'/const CACHE_NAME = 'appnehmen-cache-v$COMMIT_ID'/" build/web/service_worker.js
-
-      - name: Download previous build for website-only changes
-        if: needs.detect-changes.outputs.app == 'false' && needs.detect-changes.outputs.website == 'true'
-        run: |
-          # Create build directory
-          mkdir -p build/web
-          
-          # Try to get the latest deployed version from GitHub Pages
-          wget -r -np -nH --cut-dirs=1 -R "index.html" -P build/web https://oliverbyte.github.io/appnehmen/ || true
-          
-          # Clean up wget artifacts
-          rm -rf build/web/robots.txt build/web/.wget-hsts 2>/dev/null || true
-
-      - name: Download previous build for website-only changes
-        if: needs.detect-changes.outputs.app == 'false' && needs.detect-changes.outputs.website == 'true'
-        run: |
-          # Create build directory
-          mkdir -p build/web
-          
-          # Try to get the latest deployed version from GitHub Pages
-          wget -r -np -nH --cut-dirs=1 -R "index.html" -P build/web https://oliverbyte.github.io/appnehmen/ || true
-          
-          # Clean up wget artifacts
-          rm -rf build/web/robots.txt build/web/.wget-hsts 2>/dev/null || true
 
       - name: Setup Ruby for Jekyll
         if: needs.detect-changes.outputs.website == 'true'
