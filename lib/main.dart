@@ -5,6 +5,7 @@ import 'services/analytics_service.dart';
 import 'screens/onboarding_screen.dart';
 import 'screens/home_screen.dart';
 
+// Force rebuild - 2026-01-11
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initializeDateFormatting('de_DE', null);
