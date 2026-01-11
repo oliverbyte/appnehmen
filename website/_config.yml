@@ -1,8 +1,8 @@
 # Site settings
 title: "Appnehmen - Dein digitaler Abnehmhelfer"
 description: "Minimaler, lokaler Abnehm-Tracker und Heißhunger-Helfer. Keine Cloud, keine Anmeldung, keine komplizierten Features. Einfach abnehmen."
-baseurl: ""
-url: "https://oliverbyte.github.io/appnehmen/info"
+baseurl: "/appnehmen/info"
+url: "https://oliverbyte.github.io"
 lang: de
 author: Oliver Byte
 
