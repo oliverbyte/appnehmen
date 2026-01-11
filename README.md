@@ -2,6 +2,10 @@
 
 Eine Progressive Web App (PWA) zur Unterstützung beim Abnehmen – mit lokaler Datenspeicherung, Gewichtsverfolgung und Heißhunger-Notfallhilfe.
 
+**🌐 Website**: [https://oliverbyte.github.io/appnehmen/info/](https://oliverbyte.github.io/appnehmen/info/)
+
+**📱 App starten**: [https://oliverbyte.github.io/appnehmen/](https://oliverbyte.github.io/appnehmen/)
+
 ## 📱 Über die App
 
 **Appnehmen** ist eine minimalistische PWA, die dir mit einfachen aber wirksamen Werkzeugen beim Abnehmen hilft:

@@ -17,6 +17,12 @@ description: Minimaler, lokaler Abnehm-Tracker und Heißhunger-Helfer. Keine Clo
 <div class="features">
   <h2>Warum Appnehmen?</h2>
   
+  <div class="screenshots">
+    <img src="{{ '/assets/images/startseite.png' | relative_url }}" alt="Startseite" />
+    <img src="{{ '/assets/images/gewichtsverlauf.png' | relative_url }}" alt="Gewichtsverlauf" />
+    <img src="{{ '/assets/images/gewohnheiten.png' | relative_url }}" alt="Gewohnheiten-Tracker" />
+  </div>
+  
   <div class="feature-grid">
     <div class="feature">
       <h3>🔒 100% Privat</h3>
