@@ -80,6 +80,38 @@ body {
   opacity: 0.9;
 }
 
+/* Screenshots Section */
+.screenshots-section {
+  margin-bottom: 80px;
+  text-align: center;
+}
+
+.screenshots-section h2 {
+  font-size: 2.5rem;
+  color: var(--primary-green);
+  margin-bottom: 40px;
+}
+
+.screenshots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.screenshots img {
+  max-width: 280px;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px var(--shadow);
+  transition: transform 0.3s ease;
+}
+
+.screenshots img:hover {
+  transform: scale(1.05);
+}
+
 /* Features Section */
 .features {
   margin-bottom: 80px;
@@ -283,7 +315,8 @@ body {
   .features h2,
   .how-it-works h2,
   .about h2,
-  .final-cta h2 {
+  .final-cta h2,
+  .screenshots-section h2 {
     font-size: 2rem;
   }
   

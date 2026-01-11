@@ -14,14 +14,17 @@ description: Minimaler, lokaler Abnehm-Tracker und Heißhunger-Helfer. Keine Clo
   </div>
 </div>
 
-<div class="features">
-  <h2>Warum Appnehmen?</h2>
-  
+<div class="screenshots-section">
+  <h2>Einblicke in die App</h2>
   <div class="screenshots">
     <img src="{{ '/assets/images/startseite.png' | relative_url }}" alt="Startseite" />
     <img src="{{ '/assets/images/gewichtsverlauf.png' | relative_url }}" alt="Gewichtsverlauf" />
     <img src="{{ '/assets/images/gewohnheiten.png' | relative_url }}" alt="Gewohnheiten-Tracker" />
   </div>
+</div>
+
+<div class="features">
+  <h2>Warum Appnehmen?</h2>
   
   <div class="feature-grid">
     <div class="feature">
