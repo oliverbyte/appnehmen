@@ -23,3 +23,32 @@ Use this mapping to know the current vs. former names—so you can correctly int
 - When troubleshooting issues, invoke **troubleshoot** tool if available.
 - Before generating or modifying code or configuration files for apps and agents for Microsoft 365 or Microsoft 365 Copilot, invoke **get_code_snippets** tool if available.
 - Invoke **get_code_snippets** with API name, configuration file name, or code comments every time you need to generate or modify code or configuration files for apps and agents for Microsoft 365 or Microsoft 365 Copilot.
+
+## GitHub Pages Deployment Setup
+
+This project deploys both a Flutter PWA app and a Jekyll website to GitHub Pages:
+
+### Structure
+- **Flutter app**: Deployed at root (`https://oliverbyte.github.io/appnehmen/`)
+- **Jekyll website**: Deployed at `/info/` subdirectory (`https://oliverbyte.github.io/appnehmen/info/`)
+
+### Key Configuration Files
+
+#### `.github/workflows/deploy.yml`
+- **Always builds Flutter app** (not conditional) to ensure root index.html exists
+- Builds Flutter with `--base-href "/appnehmen/"` 
+- Builds Jekyll to `build/web/info` subdirectory
+- Updates service worker cache version with commit ID
+
+#### `website/_config.yml`
+- **baseurl**: Must be `/appnehmen/info` (not just `/appnehmen`)
+- This ensures Jekyll assets (CSS, images) load correctly at the `/info/` path
+- The `relative_url` filter depends on this baseurl
+
+#### Flutter build
+- Uses `--base-href "/appnehmen/"` flag for proper routing in subdirectory
+
+### Important Notes
+- The Flutter app must ALWAYS be built, even for website-only changes, to maintain the root index.html
+- Jekyll baseurl must include the full path `/appnehmen/info` for assets to work
+- Any changes to these paths require updating both the workflow and Jekyll config consistently
