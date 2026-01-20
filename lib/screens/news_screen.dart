@@ -30,6 +30,11 @@ class _NewsScreenState extends State<NewsScreen> {
             'Januar 2026',
             [
               _NewsItem(
+                icon: Icons.calendar_view_week,
+                title: 'Flexible Zeitraumauswahl für Gewichtsdiagramm',
+                description: 'Wähle den Zeitraum für dein Gewichtsdiagramm: 7 Tage, 14 Tage, 4 Wochen (Standard), 3 Monate, 6 Monate, 1 Jahr, 5 Jahre oder 10 Jahre. So behältst du sowohl kurzfristige als auch langfristige Trends im Blick.',
+              ),
+              _NewsItem(
                 icon: Icons.show_chart,
                 title: 'Trendlinie im Gewichtsdiagramm',
                 description: 'Eine deutlich sichtbare Trendlinie zeigt die Gewichtsentwicklung: Grau bei neutralem Verlauf, Rot bei Gewichtszunahme, Grün bei Gewichtsabnahme.',

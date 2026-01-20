@@ -16,12 +16,28 @@ class WeightHistoryScreen extends StatefulWidget {
   State<WeightHistoryScreen> createState() => _WeightHistoryScreenState();
 }
 
+enum TimeRange {
+  sevenDays('7 Tage', 7),
+  fourteenDays('14 Tage', 14),
+  fourWeeks('4 Wochen', 28),
+  threeMonths('3 Monate', 90),
+  sixMonths('6 Monate', 180),
+  oneYear('1 Jahr', 365),
+  fiveYears('5 Jahre', 1825),
+  tenYears('10 Jahre', 3650);
+
+  final String label;
+  final int days;
+  const TimeRange(this.label, this.days);
+}
+
 class _WeightHistoryScreenState extends State<WeightHistoryScreen> {
   final _storageService = StorageService();
   List<WeightEntry> _history = [];
   double? _targetWeight;
   double? _currentWeight;
   bool _isLoading = true;
+  TimeRange _selectedTimeRange = TimeRange.fourWeeks;
 
   @override
   void initState() {
@@ -163,8 +179,16 @@ class _WeightHistoryScreenState extends State<WeightHistoryScreen> {
       );
     }
 
-    final minWeight = _history.map((e) => e.weight).reduce((a, b) => a < b ? a : b);
-    final maxWeight = _history.map((e) => e.weight).reduce((a, b) => a > b ? a : b);
+    // Filter history based on selected time range
+    final now = DateTime.now();
+    final cutoffDate = now.subtract(Duration(days: _selectedTimeRange.days));
+    final filteredHistory = _history.where((entry) => entry.date.isAfter(cutoffDate)).toList();
+    
+    // Use filtered history for chart, or show all if filtered is empty
+    final chartHistory = filteredHistory.isEmpty ? _history : filteredHistory;
+
+    final minWeight = chartHistory.map((e) => e.weight).reduce((a, b) => a < b ? a : b);
+    final maxWeight = chartHistory.map((e) => e.weight).reduce((a, b) => a > b ? a : b);
     final weightRange = maxWeight - minWeight;
     final chartMinY = (minWeight - weightRange * 0.1).floorToDouble();
     final chartMaxY = (maxWeight + weightRange * 0.1).ceilToDouble();
@@ -173,13 +197,13 @@ class _WeightHistoryScreenState extends State<WeightHistoryScreen> {
     List<FlSpot> trendSpots = [];
     Color trendColor = Colors.grey;
     
-    if (_history.length >= 2) {
-      final n = _history.length;
+    if (chartHistory.length >= 2) {
+      final n = chartHistory.length;
       double sumX = 0, sumY = 0, sumXY = 0, sumXX = 0;
       
       for (int i = 0; i < n; i++) {
         final x = i.toDouble();
-        final y = _history[i].weight;
+        final y = chartHistory[i].weight;
         sumX += x;
         sumY += y;
         sumXY += x * y;
@@ -220,6 +244,8 @@ class _WeightHistoryScreenState extends State<WeightHistoryScreen> {
             children: [
               _buildStatisticsCards(),
               const SizedBox(height: 24),
+              _buildTimeRangeSelector(),
+              const SizedBox(height: 16),
               Container(
                 height: 300,
                 padding: const EdgeInsets.all(16),
@@ -287,8 +313,8 @@ class _WeightHistoryScreenState extends State<WeightHistoryScreen> {
                           showTitles: true,
                           reservedSize: 30,
                           getTitlesWidget: (value, meta) {
-                            if (value.toInt() >= 0 && value.toInt() < _history.length) {
-                              final date = _history[value.toInt()].date;
+                            if (value.toInt() >= 0 && value.toInt() < chartHistory.length) {
+                              final date = chartHistory[value.toInt()].date;
                               return Padding(
                                 padding: const EdgeInsets.only(top: 8.0),
                                 child: Text(
@@ -313,7 +339,7 @@ class _WeightHistoryScreenState extends State<WeightHistoryScreen> {
                     ),
                     lineBarsData: [
                       LineChartBarData(
-                        spots: _history
+                        spots: chartHistory
                             .asMap()
                             .entries
                             .map((e) => FlSpot(e.key.toDouble(), e.value.weight))
@@ -341,7 +367,7 @@ class _WeightHistoryScreenState extends State<WeightHistoryScreen> {
                         LineChartBarData(
                           spots: [
                             FlSpot(0, _targetWeight!),
-                            FlSpot(_history.length.toDouble() - 1, _targetWeight!),
+                            FlSpot(chartHistory.length.toDouble() - 1, _targetWeight!),
                           ],
                           isCurved: false,
                           color: Colors.green[600],
@@ -382,6 +408,61 @@ class _WeightHistoryScreenState extends State<WeightHistoryScreen> {
               _buildHistoryList(),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTimeRangeSelector() {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withValues(alpha: 0.1),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: TimeRange.values.map((range) {
+            final isSelected = _selectedTimeRange == range;
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 4),
+              child: ChoiceChip(
+                label: Text(
+                  range.label,
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+                  ),
+                ),
+                selected: isSelected,
+                onSelected: (selected) {
+                  if (selected) {
+                    setState(() {
+                      _selectedTimeRange = range;
+                    });
+                  }
+                },
+                selectedColor: Colors.green[600],
+                backgroundColor: Colors.grey[100],
+                labelStyle: TextStyle(
+                  color: isSelected ? Colors.white : Colors.grey[700],
+                ),
+                side: BorderSide(
+                  color: isSelected ? Colors.green[700]! : Colors.grey[300]!,
+                  width: 1,
+                ),
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              ),
+            );
+          }).toList(),
         ),
       ),
     );
