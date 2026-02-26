@@ -74,7 +74,9 @@ This project uses different languages for different contexts:
 
 ## News Service Update Policy
 
-**Important**: When making user-relevant changes, always update the news screen (`lib/screens/news_screen.dart`):
+**Important**: When making user-relevant changes, always update both:
+1. **In-app news screen**: `lib/screens/news_screen.dart`
+2. **Jekyll website**: `website/index.md` (features section)
 
 ### When to add a news entry:
 - New features or functionality
@@ -86,12 +88,12 @@ This project uses different languages for different contexts:
 ### When NOT to add a news entry:
 - Internal code refactoring
 - Minor code cleanup
-- Documentation updates
+- Documentation updates (except website content)
 - Development tooling changes
 
 ### News entry format:
 - Add new entries at the TOP of the list (most recent first)
 - Use German language for user-facing content
-- Include an appropriate icon
+- Include an appropriate icon (in-app)
 - Keep descriptions concise but informative
 - Group entries by month (e.g., "Februar 2026", "Januar 2026")
