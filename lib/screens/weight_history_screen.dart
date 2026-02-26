@@ -9,6 +9,17 @@ String _formatGermanNumber(double number, int decimalPlaces) {
   return number.toStringAsFixed(decimalPlaces).replaceAll('.', ',');
 }
 
+// Helper function to calculate appropriate x-axis interval based on number of data points
+double _calculateXAxisInterval(int dataPointCount) {
+  if (dataPointCount <= 7) return 1; // Show all labels for 7 days or less
+  if (dataPointCount <= 14) return 2; // Show every 2nd label for 14 days
+  if (dataPointCount <= 30) return 4; // Show every 4th label for ~4 weeks
+  if (dataPointCount <= 90) return 10; // Show every 10th label for ~3 months
+  if (dataPointCount <= 180) return 20; // Show every 20th label for ~6 months
+  if (dataPointCount <= 365) return 40; // Show every 40th label for ~1 year
+  return 80; // Show every 80th label for longer periods
+}
+
 class WeightHistoryScreen extends StatefulWidget {
   const WeightHistoryScreen({super.key});
 
@@ -335,6 +346,7 @@ class _WeightHistoryScreenState extends State<WeightHistoryScreen> {
                         sideTitles: SideTitles(
                           showTitles: true,
                           reservedSize: 30,
+                          interval: _calculateXAxisInterval(chartHistory.length),
                           getTitlesWidget: (value, meta) {
                             if (value.toInt() >= 0 && value.toInt() < chartHistory.length) {
                               final date = chartHistory[value.toInt()].date;
