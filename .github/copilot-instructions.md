@@ -53,6 +53,26 @@ This project deploys both a Flutter PWA app and a Jekyll website to GitHub Pages
 - Jekyll baseurl must include the full path `/appnehmen/info` for assets to work
 - Any changes to these paths require updating both the workflow and Jekyll config consistently
 
+### Deployment Workflow Critical Rules
+
+**CRITICAL**: The deployment workflow must ALWAYS build and deploy both Flutter app and Jekyll website on EVERY push to main branch, regardless of which files changed.
+
+**Why this is critical:**
+- After force-pushes, the workflow might not detect file changes correctly
+- Users may see old, cached versions of the app with bugs that were supposedly fixed
+- The app must be rebuilt to update the service worker cache with new commit IDs
+
+**Implementation:**
+- The workflow does NOT use conditional builds based on changed files
+- Both Flutter and Jekyll are built on every deployment
+- The service worker cache version is updated with the commit ID on every build
+- This ensures users always get the latest version after a hard refresh
+
+**If deployment issues occur:**
+- Manually trigger the workflow via GitHub Actions UI or `gh workflow run deploy.yml`
+- Force rebuild ensures the latest code is deployed
+- Verify deployment by checking the commit hash in the deployed service worker
+
 ## Language Guidelines
 
 This project uses different languages for different contexts:
