@@ -75,14 +75,22 @@ class UpdateManager {
 
     console.log('Applying update - reloading to activate new version...');
     
+    // Show loading overlay
+    const overlay = document.getElementById('loading-overlay');
+    if (overlay) {
+      overlay.classList.remove('hidden');
+    }
+    
     // Set flag to redirect to news page after reload
     sessionStorage.setItem('showNewsAfterUpdate', 'true');
     
     // Send message to new Service Worker to activate immediately
     this.waitingWorker.postMessage({ type: 'SKIP_WAITING' });
     
-    // Immediately reload - the new service worker will take over
-    window.location.reload();
+    // Reload after a short delay to ensure overlay is visible
+    setTimeout(() => {
+      window.location.reload();
+    }, 300);
   }
 
   // Trigger manual update check
@@ -96,3 +104,18 @@ class UpdateManager {
 // Make globally available and initialize
 window.updateManager = new UpdateManager();
 window.updateManager.init();
+
+// Hide loading overlay once Flutter app is loaded
+window.addEventListener('load', () => {
+  // Wait a bit for Flutter to fully initialize
+  setTimeout(() => {
+    const overlay = document.getElementById('loading-overlay');
+    if (overlay) {
+      overlay.classList.add('hidden');
+      // Remove from DOM after transition
+      setTimeout(() => {
+        overlay.remove();
+      }, 300);
+    }
+  }, 500);
+});
