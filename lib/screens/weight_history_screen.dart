@@ -192,8 +192,23 @@ class _WeightHistoryScreenState extends State<WeightHistoryScreen> {
       return !entryDate.isBefore(cutoffDate);
     }).toList();
     
+    // Group by date and take only the last (newest) entry per day
+    final Map<String, WeightEntry> latestEntriesPerDay = {};
+    for (final entry in filteredHistory) {
+      final dateKey = '${entry.date.year}-${entry.date.month}-${entry.date.day}';
+      final existing = latestEntriesPerDay[dateKey];
+      // Keep the entry with the latest time for this day
+      if (existing == null || entry.date.isAfter(existing.date)) {
+        latestEntriesPerDay[dateKey] = entry;
+      }
+    }
+    
+    // Convert back to sorted list
+    final chartData = latestEntriesPerDay.values.toList()
+      ..sort((a, b) => a.date.compareTo(b.date));
+    
     // Use filtered history for chart, or show all if filtered is empty
-    final chartHistory = filteredHistory.isEmpty ? _history : filteredHistory;
+    final chartHistory = chartData.isEmpty ? _history : chartData;
 
     final minWeight = chartHistory.map((e) => e.weight).reduce((a, b) => a < b ? a : b);
     final maxWeight = chartHistory.map((e) => e.weight).reduce((a, b) => a > b ? a : b);

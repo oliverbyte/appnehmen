@@ -32,7 +32,7 @@ class _NewsScreenState extends State<NewsScreen> {
               _NewsItem(
                 icon: Icons.bug_report,
                 title: 'Bugfix: Gewichtsdiagramm zeigt neueste Einträge',
-                description: 'Das Gewichtsdiagramm zeigt jetzt korrekt alle neuesten Gewichtseinträge an. Der Zeitraumfilter wurde verbessert um alle Einträge des gewählten Zeitraums einzuschließen. Die Trendlinie und der Verlauf sind nun immer aktuell.',
+                description: 'Das Gewichtsdiagramm zeigt jetzt korrekt alle neuesten Gewichtseinträge an. Bei mehreren Einträgen pro Tag wird automatisch der letzte (aktuellste) Wert verwendet. Die Trendlinie und der Verlauf sind nun immer aktuell.',
               ),
             ],
           ),
