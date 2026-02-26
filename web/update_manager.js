@@ -35,14 +35,15 @@ class UpdateManager {
           
           newWorker.addEventListener('statechange', () => {
             if (newWorker.state === 'installed') {
-              console.log('Update ready - waiting for user action');
+              console.log('Update ready - auto-applying...');
               this.updateAvailable = true;
               this.waitingWorker = newWorker;
               
-              // Notify Flutter app that update is available
-              if (this.updateCallback) {
-                this.updateCallback(true);
-              }
+              // Auto-apply update immediately
+              setTimeout(() => {
+                console.log('Auto-reloading app to apply update...');
+                this.applyUpdate();
+              }, 500);
             }
           });
         }
