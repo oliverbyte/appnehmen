@@ -318,6 +318,35 @@ class _WeightHistoryScreenState extends State<WeightHistoryScreen> {
                           }).toList();
                         },
                       ),
+                      getTouchedSpotIndicator: (LineChartBarData barData, List<int> spotIndexes) {
+                        return spotIndexes.map((index) {
+                          // Only show indicator for weight data line (green), not trend/target lines
+                          if (barData.color == Colors.green[600]) {
+                            return TouchedSpotIndicatorData(
+                              FlLine(
+                                color: Colors.green[600]!,
+                                strokeWidth: 2,
+                              ),
+                              FlDotData(
+                                show: true,
+                                getDotPainter: (spot, percent, barData, index) {
+                                  return FlDotCirclePainter(
+                                    radius: 6,
+                                    color: Colors.green[600]!,
+                                    strokeWidth: 2,
+                                    strokeColor: Colors.white,
+                                  );
+                                },
+                              ),
+                            );
+                          }
+                          // Don't show indicator for trend/target lines
+                          return TouchedSpotIndicatorData(
+                            FlLine(color: Colors.transparent, strokeWidth: 0),
+                            FlDotData(show: false),
+                          );
+                        }).toList();
+                      },
                     ),
                     gridData: FlGridData(
                       show: true,
