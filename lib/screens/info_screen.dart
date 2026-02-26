@@ -14,7 +14,7 @@ class InfoScreen extends StatelessWidget {
       builder: (context) => AlertDialog(
         title: const Text('Cache löschen'),
         content: const Text(
-          'Cache und Service Worker werden gelöscht, um die neueste Version zu laden.\n\nDeine Daten bleiben erhalten!',
+          'Cache wird gelöscht, um die neueste Version zu laden.\n\nDeine Daten bleiben erhalten!',
         ),
         actions: [
           TextButton(
@@ -40,26 +40,18 @@ class InfoScreen extends StatelessWidget {
         }
       }
 
-      // Unregister service workers
-      final registrations = await html.window.navigator.serviceWorker?.getRegistrations();
-      if (registrations != null) {
-        for (final registration in registrations) {
-          await registration.unregister();
-        }
-      }
-
-      // Show success message and reload
+      // Show success message and reload with force
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('Cache gelöscht. App wird neu geladen...'),
-            duration: Duration(seconds: 2),
+            duration: Duration(seconds: 1),
           ),
         );
       }
 
-      // Reload page after short delay
-      await Future.delayed(const Duration(milliseconds: 1000));
+      // Force hard reload after short delay
+      await Future.delayed(const Duration(milliseconds: 500));
       html.window.location.reload();
     } catch (e) {
       if (context.mounted) {

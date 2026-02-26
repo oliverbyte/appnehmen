@@ -67,13 +67,24 @@ class UpdateManager {
   }
 
   // User-triggered update - call this when user clicks update button
-  applyUpdate() {
+  async applyUpdate() {
     if (!this.waitingWorker) {
       console.log('No update available to apply');
       return;
     }
 
-    console.log('Applying update - reloading to activate new version...');
+    console.log('Applying update - clearing cache and reloading...');
+    
+    try {
+      // Clear all old caches BEFORE reload
+      const cacheNames = await caches.keys();
+      for (const cacheName of cacheNames) {
+        await caches.delete(cacheName);
+        console.log('Deleted cache:', cacheName);
+      }
+    } catch (error) {
+      console.error('Error clearing caches:', error);
+    }
     
     // Set flag to show loading overlay during update
     sessionStorage.setItem('isUpdating', 'true');
