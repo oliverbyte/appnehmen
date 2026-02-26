@@ -119,10 +119,7 @@ window.addEventListener('load', () => {
       const overlay = document.getElementById('loading-overlay');
       if (overlay) {
         overlay.classList.add('hidden');
-        // Remove from DOM after transition
-        setTimeout(() => {
-          overlay.remove();
-        }, 300);
+        // Keep in DOM but hidden (don't remove) to prevent re-creation flicker
       }
     }, 1000);
   } else {
@@ -131,10 +128,7 @@ window.addEventListener('load', () => {
       const overlay = document.getElementById('loading-overlay');
       if (overlay) {
         overlay.classList.add('hidden');
-        // Remove from DOM after transition
-        setTimeout(() => {
-          overlay.remove();
-        }, 300);
+        // Keep in DOM but hidden (don't remove) to prevent re-creation flicker
       }
     }, 500);
   }
