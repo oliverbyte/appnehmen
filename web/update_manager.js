@@ -76,6 +76,9 @@ class UpdateManager {
 
     console.log('Applying update - reloading to activate new version...');
     
+    // Set flag to show loading overlay during update
+    sessionStorage.setItem('isUpdating', 'true');
+    
     // Show loading overlay
     const overlay = document.getElementById('loading-overlay');
     if (overlay) {
@@ -108,15 +111,31 @@ window.updateManager.init();
 
 // Hide loading overlay once Flutter app is loaded
 window.addEventListener('load', () => {
-  // Wait a bit for Flutter to fully initialize
-  setTimeout(() => {
-    const overlay = document.getElementById('loading-overlay');
-    if (overlay) {
-      overlay.classList.add('hidden');
-      // Remove from DOM after transition
-      setTimeout(() => {
-        overlay.remove();
-      }, 300);
-    }
-  }, 500);
+  // Don't auto-hide overlay if we're in the middle of an update
+  if (sessionStorage.getItem('isUpdating') === 'true') {
+    sessionStorage.removeItem('isUpdating');
+    // Keep overlay visible longer during update to prevent flicker
+    setTimeout(() => {
+      const overlay = document.getElementById('loading-overlay');
+      if (overlay) {
+        overlay.classList.add('hidden');
+        // Remove from DOM after transition
+        setTimeout(() => {
+          overlay.remove();
+        }, 300);
+      }
+    }, 1000);
+  } else {
+    // Normal load - hide overlay after short delay
+    setTimeout(() => {
+      const overlay = document.getElementById('loading-overlay');
+      if (overlay) {
+        overlay.classList.add('hidden');
+        // Remove from DOM after transition
+        setTimeout(() => {
+          overlay.remove();
+        }, 300);
+      }
+    }, 500);
+  }
 });
