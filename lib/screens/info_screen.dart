@@ -2,9 +2,76 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../build_info.dart';
 import '../services/analytics_service.dart';
+import 'dart:html' as html;
 
 class InfoScreen extends StatelessWidget {
   const InfoScreen({super.key});
+
+  Future<void> _clearCacheAndReload(BuildContext context) async {
+    // Show confirmation dialog
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Cache löschen'),
+        content: const Text(
+          'Cache und Service Worker werden gelöscht, um die neueste Version zu laden.\n\nDeine Daten bleiben erhalten!',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('Abbrechen'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: const Text('Löschen', style: TextStyle(color: Colors.red)),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed != true) return;
+
+    try {
+      // Clear all caches
+      final cacheNames = await html.window.caches?.keys();
+      if (cacheNames != null) {
+        for (final cacheName in cacheNames) {
+          await html.window.caches?.delete(cacheName);
+        }
+      }
+
+      // Unregister service workers
+      final registrations = await html.window.navigator.serviceWorker?.getRegistrations();
+      if (registrations != null) {
+        for (final registration in registrations) {
+          await registration.unregister();
+        }
+      }
+
+      // Show success message and reload
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Cache gelöscht. App wird neu geladen...'),
+            duration: Duration(seconds: 2),
+          ),
+        );
+      }
+
+      // Reload page after short delay
+      await Future.delayed(const Duration(milliseconds: 1000));
+      html.window.location.reload();
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Fehler beim Löschen: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -232,6 +299,17 @@ class InfoScreen extends StatelessWidget {
                         fontSize: 12,
                         fontFamily: 'monospace',
                         color: Colors.grey[600],
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    OutlinedButton.icon(
+                      onPressed: () => _clearCacheAndReload(context),
+                      icon: const Icon(Icons.refresh, size: 18),
+                      label: const Text('Cache löschen & neu laden'),
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: Colors.grey[700],
+                        side: BorderSide(color: Colors.grey[400]!),
+                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                       ),
                     ),
                     const SizedBox(height: 8),
