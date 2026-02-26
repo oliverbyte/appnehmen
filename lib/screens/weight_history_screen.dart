@@ -179,12 +179,18 @@ class _WeightHistoryScreenState extends State<WeightHistoryScreen> {
       );
     }
 
-    // Filter history based on selected time range
+    // Filter history based on selected time range  
     final now = DateTime.now();
-    // Set cutoff to start of the day to ensure we include all entries from that day
+    // Calculate how many days back we want to show
     final cutoffDateTime = now.subtract(Duration(days: _selectedTimeRange.days));
+    // Set cutoff to start of day to include all entries from that day
     final cutoffDate = DateTime(cutoffDateTime.year, cutoffDateTime.month, cutoffDateTime.day);
-    final filteredHistory = _history.where((entry) => !entry.date.isBefore(cutoffDate)).toList();
+    
+    // Filter entries that are not before the cutoff date
+    final filteredHistory = _history.where((entry) {
+      final entryDate = DateTime(entry.date.year, entry.date.month, entry.date.day);
+      return !entryDate.isBefore(cutoffDate);
+    }).toList();
     
     // Use filtered history for chart, or show all if filtered is empty
     final chartHistory = filteredHistory.isEmpty ? _history : filteredHistory;
