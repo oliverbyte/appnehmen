@@ -21,10 +21,7 @@ self.addEventListener('install', (event) => {
         console.log('[Service Worker] Caching app shell');
         return cache.addAll(ASSETS_TO_CACHE);
       })
-      .then(() => {
-        // Force immediate activation of new Service Worker
-        return self.skipWaiting();
-      })
+      // DO NOT auto-skipWaiting - wait for user action via SKIP_WAITING message
   );
 });
 

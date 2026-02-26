@@ -12,9 +12,9 @@ class InfoScreen extends StatelessWidget {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Cache löschen'),
+        title: const Text('App neu laden'),
         content: const Text(
-          'Cache wird gelöscht, um die neueste Version zu laden.\n\nDeine Daten bleiben erhalten!',
+          'App wird vom Server neu geladen, um die neueste Version zu erhalten.\n\nDeine Daten bleiben erhalten!',
         ),
         actions: [
           TextButton(
@@ -23,7 +23,7 @@ class InfoScreen extends StatelessWidget {
           ),
           TextButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Löschen', style: TextStyle(color: Colors.red)),
+            child: const Text('Neu laden', style: TextStyle(color: Colors.blue)),
           ),
         ],
       ),
@@ -31,38 +31,19 @@ class InfoScreen extends StatelessWidget {
 
     if (confirmed != true) return;
 
-    try {
-      // Clear all caches
-      final cacheNames = await html.window.caches?.keys();
-      if (cacheNames != null) {
-        for (final cacheName in cacheNames) {
-          await html.window.caches?.delete(cacheName);
-        }
-      }
-
-      // Show success message and reload with force
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Cache gelöscht. App wird neu geladen...'),
-            duration: Duration(seconds: 1),
-          ),
-        );
-      }
-
-      // Force hard reload after short delay
-      await Future.delayed(const Duration(milliseconds: 500));
-      html.window.location.reload();
-    } catch (e) {
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Fehler beim Löschen: $e'),
-            backgroundColor: Colors.red,
-          ),
-        );
-      }
+    // Show success message
+    if (context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('App wird neu geladen...'),
+          duration: Duration(milliseconds: 800),
+        ),
+      );
     }
+
+    // Force hard reload from server (bypasses cache)
+    await Future.delayed(const Duration(milliseconds: 500));
+    html.window.location.reload();
   }
 
   @override
@@ -297,7 +278,7 @@ class InfoScreen extends StatelessWidget {
                     OutlinedButton.icon(
                       onPressed: () => _clearCacheAndReload(context),
                       icon: const Icon(Icons.refresh, size: 18),
-                      label: const Text('Cache löschen & neu laden'),
+                      label: const Text('App neu laden'),
                       style: OutlinedButton.styleFrom(
                         foregroundColor: Colors.grey[700],
                         side: BorderSide(color: Colors.grey[400]!),
