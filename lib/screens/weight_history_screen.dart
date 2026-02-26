@@ -302,11 +302,11 @@ class _WeightHistoryScreenState extends State<WeightHistoryScreen> {
                       touchTooltipData: LineTouchTooltipData(
                         getTooltipColor: (touchedSpot) => Colors.grey[800]!,
                         getTooltipItems: (List<LineBarSpot> touchedSpots) {
-                          return touchedSpots.asMap().entries.map((entry) {
-                            // Only show tooltip for the first line (weight data), not the target line
-                            if (entry.key == 0) {
+                          return touchedSpots.map((spot) {
+                            // Only show tooltip for weight data line (barIndex 0), not trend/target lines
+                            if (spot.barIndex == 0) {
                               return LineTooltipItem(
-                                _formatGermanNumber(entry.value.y, 1),
+                                _formatGermanNumber(spot.y, 1),
                                 const TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
