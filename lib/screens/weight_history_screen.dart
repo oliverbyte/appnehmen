@@ -182,7 +182,7 @@ class _WeightHistoryScreenState extends State<WeightHistoryScreen> {
     // Filter history based on selected time range
     final now = DateTime.now();
     final cutoffDate = now.subtract(Duration(days: _selectedTimeRange.days));
-    final filteredHistory = _history.where((entry) => entry.date.isAfter(cutoffDate)).toList();
+    final filteredHistory = _history.where((entry) => !entry.date.isBefore(cutoffDate)).toList();
     
     // Use filtered history for chart, or show all if filtered is empty
     final chartHistory = filteredHistory.isEmpty ? _history : filteredHistory;
