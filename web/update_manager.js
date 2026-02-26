@@ -14,24 +14,6 @@ class UpdateManager {
       return;
     }
 
-    // Listen for RELOAD messages from Service Worker
-    navigator.serviceWorker.addEventListener('message', (event) => {
-      if (event.data && event.data.type === 'RELOAD') {
-        console.log('Service Worker requests reload - applying update...');
-        // Show loading overlay
-        const overlay = document.getElementById('loading-overlay');
-        if (overlay) {
-          overlay.classList.remove('hidden');
-        }
-        // Set update flag
-        sessionStorage.setItem('isUpdating', 'true');
-        // Reload after short delay
-        setTimeout(() => {
-          window.location.reload();
-        }, 300);
-      }
-    });
-
     try {
       // Register Service Worker
       // Automatically determine correct path from <base href>
@@ -53,15 +35,14 @@ class UpdateManager {
           
           newWorker.addEventListener('statechange', () => {
             if (newWorker.state === 'installed') {
-              console.log('Update ready - auto-applying...');
+              console.log('Update ready - waiting for user action');
               this.updateAvailable = true;
               this.waitingWorker = newWorker;
               
-              // Auto-apply update immediately
-              setTimeout(() => {
-                console.log('Auto-reloading app to apply update...');
-                this.applyUpdate();
-              }, 500);
+              // Notify Flutter app that update is available
+              if (this.updateCallback) {
+                this.updateCallback(true);
+              }
             }
           });
         }

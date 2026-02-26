@@ -5,9 +5,28 @@ class UpdateBanner extends StatelessWidget {
   const UpdateBanner({super.key});
 
   void _applyUpdate() {
-    // Call JavaScript function to apply update
+    // Clear all caches and service workers, then reload
     js.context.callMethod('eval', [
-      'if (window.updateManager) { window.updateManager.applyUpdate(); }'
+      '''
+      (async function() {
+        // Clear all caches
+        const cacheNames = await caches.keys();
+        for (const cacheName of cacheNames) {
+          await caches.delete(cacheName);
+        }
+        // Unregister service workers
+        const registrations = await navigator.serviceWorker.getRegistrations();
+        for (const registration of registrations) {
+          await registration.unregister();
+        }
+        // Call update manager to reload
+        if (window.updateManager) { 
+          window.updateManager.applyUpdate(); 
+        } else {
+          window.location.reload();
+        }
+      })();
+      '''
     ]);
   }
 

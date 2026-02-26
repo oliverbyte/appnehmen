@@ -427,18 +427,6 @@ class _WeightHistoryScreenState extends State<WeightHistoryScreen> {
                           dotData: const FlDotData(show: false),
                           dashArray: [8, 4],
                         ),
-                      if (_targetWeight != null)
-                        LineChartBarData(
-                          spots: [
-                            FlSpot(0, _targetWeight!),
-                            FlSpot(chartHistory.length.toDouble() - 1, _targetWeight!),
-                          ],
-                          isCurved: false,
-                          color: Colors.green[600],
-                          barWidth: 2,
-                          dashArray: [5, 5],
-                          dotData: const FlDotData(show: false),
-                        ),
                     ],
                   ),
                 ),

@@ -28,13 +28,12 @@ self.addEventListener('install', (event) => {
   );
 });
 
-// Activation: Delete old caches and reload all clients
+// Activation: Delete old caches
 self.addEventListener('activate', (event) => {
   console.log('[Service Worker] Activating...');
   event.waitUntil(
-    Promise.all([
-      // Delete ALL old caches
-      caches.keys().then((cacheNames) => {
+    caches.keys()
+      .then((cacheNames) => {
         return Promise.all(
           cacheNames.map((cacheName) => {
             if (cacheName !== CACHE_NAME) {
@@ -43,19 +42,11 @@ self.addEventListener('activate', (event) => {
             }
           })
         );
-      }),
-      // Take control over all clients immediately
-      self.clients.claim().then(() => {
-        console.log('[Service Worker] Clients claimed');
-        // Force reload all clients to use new version
-        return self.clients.matchAll({ type: 'window' }).then((clients) => {
-          clients.forEach((client) => {
-            console.log('[Service Worker] Reloading client:', client.url);
-            client.postMessage({ type: 'RELOAD' });
-          });
-        });
       })
-    ])
+      .then(() => {
+        // Take control over all clients immediately
+        return self.clients.claim();
+      })
   );
 });
 
