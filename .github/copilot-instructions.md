@@ -155,3 +155,64 @@ final data = json['weight'] as double;
 // New optional field with fallback:
 final timestamp = json['timestamp'] as String? ?? DateTime.now().toIso8601String();
 ```
+
+## PWA Update and Cache Management
+
+### Automatic Update Behavior:
+- Service Worker automatically detects updates every 60 seconds
+- On activation of new Service Worker, all old caches are deleted automatically
+- Service Worker sends RELOAD message to all clients to force immediate update
+- Update Manager listens for RELOAD messages and reloads the app
+- Loading overlay is shown during the reload process
+- User data (localStorage) is always preserved during updates
+
+### Manual Cache Clear:
+- Info screen has "Cache löschen & neu laden" button for force-clear
+- Useful when automatic updates fail or user wants immediate update
+- Only clears cache and Service Worker, never touches localStorage
+
+### Critical Rules:
+- ✅ Always preserve localStorage during cache operations
+- ✅ Service Worker cache name MUST include commit ID for versioning
+- ✅ Auto-reload on Service Worker activation ensures users get latest version
+- ✅ Show loading overlay during updates to prevent user confusion
+- ❌ Never clear localStorage or user data during updates
+
+## Weight Chart Implementation
+
+### Data Filtering and Display:
+- **Group by day**: When multiple entries exist per day, show only the latest entry
+- **Date comparison**: Extract year/month/day components, ignore time for filtering
+- **Time range filtering**: Use `!isBefore()` for inclusive filtering to include cutoff day
+- **X-axis labels**: Dynamic interval based on data point count to prevent overlap
+  - 7 days: Show all labels (interval 1)
+  - 14 days: Every 2nd label (interval 2)
+  - 4 weeks: Every 4th label (interval 4)
+  - 3+ months: Scale accordingly
+
+### Tooltip and Touch Indicators:
+- **Tooltip**: Only show for weight data line (barIndex 0), not trend/target lines
+- **Touch indicator**: Use `getTouchedSpotIndicator` to control visual feedback
+- **Color**: Indicator must match weight line color (green), not trend line (red)
+- **Position**: Touched point stays on actual weight value, not trend line position
+
+### Example Implementation:
+```dart
+// Group by date and take only latest entry per day
+final Map<String, WeightEntry> latestEntriesPerDay = {};
+for (final entry in filteredHistory) {
+  final dateKey = '${entry.date.year}-${entry.date.month}-${entry.date.day}';
+  final existing = latestEntriesPerDay[dateKey];
+  if (existing == null || entry.date.isAfter(existing.date)) {
+    latestEntriesPerDay[dateKey] = entry;
+  }
+}
+
+// Dynamic x-axis interval
+double _calculateXAxisInterval(int dataPointCount) {
+  if (dataPointCount <= 7) return 1;
+  if (dataPointCount <= 14) return 2;
+  if (dataPointCount <= 30) return 4;
+  // ... scale for longer periods
+}
+```
