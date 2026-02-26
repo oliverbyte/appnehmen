@@ -117,3 +117,41 @@ This project uses different languages for different contexts:
 - Include an appropriate icon (in-app)
 - Keep descriptions concise but informative
 - Group entries by month (e.g., "Februar 2026", "Januar 2026")
+
+## Data Preservation and Backward Compatibility
+
+**CRITICAL**: This is a PWA with local data storage. All changes must preserve user data and maintain backward compatibility.
+
+### Rules:
+- **NEVER delete or modify localStorage keys** without migration logic
+- **NEVER change data structure** without backward-compatible reading logic
+- **Cache clearing must preserve user data** (only clear cache, not localStorage)
+- **Service Worker updates must not delete user data**
+- **Test data migration** before deploying breaking changes
+
+### When modifying storage:
+1. Read old format first (backward compatibility)
+2. Migrate data if needed
+3. Write in new format
+4. Keep old format reading logic for at least 2 versions
+
+### Safe operations:
+- ✅ Clearing Service Worker cache (doesn't affect localStorage)
+- ✅ Updating Service Worker version
+- ✅ Adding new optional fields to data models
+- ✅ Renaming UI elements (doesn't affect data)
+
+### Unsafe operations (require migration):
+- ❌ Changing localStorage key names
+- ❌ Changing data structure (e.g., array → object)
+- ❌ Removing fields from stored data models
+- ❌ Changing data types (e.g., string → number)
+
+### Example of safe data structure extension:
+```dart
+// Old format still works:
+final data = json['weight'] as double;
+
+// New optional field with fallback:
+final timestamp = json['timestamp'] as String? ?? DateTime.now().toIso8601String();
+```
