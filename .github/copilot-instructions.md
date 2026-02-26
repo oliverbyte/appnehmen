@@ -52,3 +52,46 @@ This project deploys both a Flutter PWA app and a Jekyll website to GitHub Pages
 - The Flutter app must ALWAYS be built, even for website-only changes, to maintain the root index.html
 - Jekyll baseurl must include the full path `/appnehmen/info` for assets to work
 - Any changes to these paths require updating both the workflow and Jekyll config consistently
+
+## Language Guidelines
+
+This project uses different languages for different contexts:
+
+- **Code comments**: English only
+- **Commit messages**: English only
+- **User-facing content (News Screen)**: German only
+- **Documentation**: English preferred (unless specifically for German users)
+
+### Examples:
+```dart
+// Good: Calculate weight trend using linear regression
+// Bad: Berechne Gewichtstrend mit linearer Regression
+
+// Commit messages:
+// Good: "Fix: Weight chart now displays all recent entries"
+// Bad: "Fix: Gewichtsdiagramm zeigt jetzt alle neuesten Einträge"
+```
+
+## News Service Update Policy
+
+**Important**: When making user-relevant changes, always update the news screen (`lib/screens/news_screen.dart`):
+
+### When to add a news entry:
+- New features or functionality
+- Important bug fixes that affected user experience
+- UI/UX improvements
+- Changes to existing features
+- Performance improvements noticeable by users
+
+### When NOT to add a news entry:
+- Internal code refactoring
+- Minor code cleanup
+- Documentation updates
+- Development tooling changes
+
+### News entry format:
+- Add new entries at the TOP of the list (most recent first)
+- Use German language for user-facing content
+- Include an appropriate icon
+- Keep descriptions concise but informative
+- Group entries by month (e.g., "Februar 2026", "Januar 2026")
