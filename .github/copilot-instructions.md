@@ -158,12 +158,12 @@ final timestamp = json['timestamp'] as String? ?? DateTime.now().toIso8601String
 
 ## PWA Update and Cache Management
 
-### Automatic Update Behavior:
+### Manual Update Behavior:
 - Service Worker automatically detects updates every 60 seconds
-- On activation of new Service Worker, all old caches are deleted automatically
-- Service Worker sends RELOAD message to all clients to force immediate update
-- Update Manager listens for RELOAD messages and reloads the app
-- Loading overlay is shown during the reload process
+- When update is detected, blue update banner appears on home screen
+- User decides when to install update by clicking "Aktualisieren" button
+- On user action, Service Worker clears old caches and activates new version
+- App reloads to complete the update process
 - User data (localStorage) is always preserved during updates
 
 ### Manual Cache Clear:
@@ -174,9 +174,11 @@ final timestamp = json['timestamp'] as String? ?? DateTime.now().toIso8601String
 ### Critical Rules:
 - ✅ Always preserve localStorage during cache operations
 - ✅ Service Worker cache name MUST include commit ID for versioning
-- ✅ Auto-reload on Service Worker activation ensures users get latest version
+- ✅ Update banner gives users full control over when to update
+- ✅ NO automatic reload - user must click "Aktualisieren" button
 - ✅ Show loading overlay during updates to prevent user confusion
 - ❌ Never clear localStorage or user data during updates
+- ❌ Never use automatic skipWaiting() in service worker install event
 
 ## Weight Chart Implementation
 
