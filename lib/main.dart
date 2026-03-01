@@ -10,8 +10,10 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initializeDateFormatting('de_DE', null);
   
-  // Initialize Mixpanel analytics
-  await AnalyticsService.initialize();
+  // Initialize Mixpanel analytics (non-blocking - runs in background)
+  AnalyticsService.initialize().catchError((e) {
+    print('Analytics initialization failed: $e');
+  });
   
   runApp(const MyApp());
 }

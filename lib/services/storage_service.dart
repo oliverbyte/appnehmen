@@ -106,20 +106,32 @@ class StorageService {
   }
 
   Future<bool> isOnboardingComplete() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getBool(_keyOnboardingComplete) ?? false;
+    try {
+      final prefs = await SharedPreferences.getInstance()
+          .timeout(const Duration(seconds: 2));
+      return prefs.getBool(_keyOnboardingComplete) ?? false;
+    } catch (e) {
+      print('Error checking onboarding status: $e');
+      return false; // Default to showing onboarding if there's an error
+    }
   }
 
   Future<Map<String, dynamic>?> getUserData() async {
-    final prefs = await SharedPreferences.getInstance();
-    if (!await isOnboardingComplete()) return null;
+    try {
+      final prefs = await SharedPreferences.getInstance()
+          .timeout(const Duration(seconds: 2));
+      if (!await isOnboardingComplete()) return null;
 
-    return {
-      'name': prefs.getString(_keyName),
-      'currentWeight': prefs.getDouble(_keyCurrentWeight),
-      'targetWeight': prefs.getDouble(_keyTargetWeight),
-      'why': prefs.getString(_keyWhy),
-    };
+      return {
+        'name': prefs.getString(_keyName),
+        'currentWeight': prefs.getDouble(_keyCurrentWeight),
+        'targetWeight': prefs.getDouble(_keyTargetWeight),
+        'why': prefs.getString(_keyWhy),
+      };
+    } catch (e) {
+      print('Error loading user data: $e');
+      return null;
+    }
   }
 
   Future<void> addWeightEntry(double weight) async {

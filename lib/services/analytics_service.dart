@@ -17,24 +17,32 @@ class AnalyticsService {
     // Mixpanel is already initialized in index.html
     print('Mixpanel initialized via HTML');
     
-    // Get or create anonymous user ID
-    final prefs = await SharedPreferences.getInstance();
-    _userId = prefs.getString(_userIdKey);
-    
-    if (_userId == null) {
-      _userId = const Uuid().v4();
-      await prefs.setString(_userIdKey, _userId!);
-      print('Created new anonymous user ID: $_userId');
-    } else {
-      print('Using existing user ID: $_userId');
-    }
-    
-    // Identify user to Mixpanel
     try {
-      js.context['mixpanel'].callMethod('identify', [_userId]);
-      print('Mixpanel user identified: $_userId');
+      // Get or create anonymous user ID with timeout to prevent blocking
+      final prefs = await SharedPreferences.getInstance()
+          .timeout(const Duration(seconds: 3));
+      
+      _userId = prefs.getString(_userIdKey);
+      
+      if (_userId == null) {
+        _userId = const Uuid().v4();
+        await prefs.setString(_userIdKey, _userId!);
+        print('Created new anonymous user ID: $_userId');
+      } else {
+        print('Using existing user ID: $_userId');
+      }
+      
+      // Identify user to Mixpanel
+      try {
+        js.context['mixpanel'].callMethod('identify', [_userId]);
+        print('Mixpanel user identified: $_userId');
+      } catch (e) {
+        print('Failed to identify user: $e');
+      }
     } catch (e) {
-      print('Failed to identify user: $e');
+      print('Analytics initialization failed (timeout or error): $e');
+      // Create temporary user ID for this session
+      _userId = const Uuid().v4();
     }
   }
 
