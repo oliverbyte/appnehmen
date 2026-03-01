@@ -89,10 +89,14 @@ class UpdateManager {
     // Set flag to show loading overlay during update
     sessionStorage.setItem('isUpdating', 'true');
     
-    // Show loading overlay
+    // Show loading overlay with update message
     const overlay = document.getElementById('loading-overlay');
+    const loadingText = document.getElementById('loading-text');
     if (overlay) {
       overlay.classList.remove('hidden');
+    }
+    if (loadingText) {
+      loadingText.textContent = 'App wird aktualisiert...';
     }
     
     // Set flag to redirect to news page after reload
@@ -129,16 +133,19 @@ window.addEventListener('load', () => {
       const overlay = document.getElementById('loading-overlay');
       if (overlay) {
         overlay.classList.add('hidden');
-        // Keep in DOM but hidden (don't remove) to prevent re-creation flicker
       }
     }, 1000);
   } else {
     // Normal load - hide overlay after short delay
     setTimeout(() => {
       const overlay = document.getElementById('loading-overlay');
+      const loadingText = document.getElementById('loading-text');
       if (overlay) {
         overlay.classList.add('hidden');
-        // Keep in DOM but hidden (don't remove) to prevent re-creation flicker
+      }
+      // Reset text for next load
+      if (loadingText) {
+        loadingText.textContent = 'Wird geladen...';
       }
     }, 500);
   }
