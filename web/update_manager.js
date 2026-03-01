@@ -127,14 +127,14 @@ class UpdateManager {
       await this.registration.update();
     }
   }
-} (non-blocking)
+}
+
+// Make globally available and initialize (non-blocking)
 window.updateManager = new UpdateManager();
 // Don't await - let it run in background
 window.updateManager.init().catch(err => {
   console.error('Update Manager initialization failed:', err);
-} and initialize
-window.updateManager = new UpdateManager();
-window.updateManager.init();
+});
 
 // Hide loading overlay once Flutter app is loaded
 window.addEventListener('load', () => {
