@@ -15,13 +15,21 @@ class UpdateManager {
     }
 
     try {
-      // Register Service Worker
+      // Register Service Worker with timeout to prevent blocking
       // Automatically determine correct path from <base href>
       const baseUrl = document.querySelector('base')?.getAttribute('href') || '/';
-      this.registration = await navigator.serviceWorker.register(
+      
+      const registrationPromise = navigator.serviceWorker.register(
         baseUrl + 'service_worker.js',
         { scope: baseUrl }
       );
+      
+      // Timeout after 5 seconds if registration hangs
+      const timeoutPromise = new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('Service Worker registration timeout')), 5000)
+      );
+      
+      this.registration = await Promise.race([registrationPromise, timeoutPromise]);
       
       console.log('Service Worker registered:', this.registration);
 
@@ -53,8 +61,10 @@ class UpdateManager {
         this.registration.update();
       }, 60000);
 
-      // Check for updates immediately on start
-      this.registration.update();
+      // Delay first update check to not block app startup (5s delay)
+      setTimeout(() => {
+        this.registration.update();
+      }, 5000);
 
     } catch (error) {
       console.error('Service Worker registration failed:', error);
@@ -117,9 +127,12 @@ class UpdateManager {
       await this.registration.update();
     }
   }
-}
-
-// Make globally available and initialize
+} (non-blocking)
+window.updateManager = new UpdateManager();
+// Don't await - let it run in background
+window.updateManager.init().catch(err => {
+  console.error('Update Manager initialization failed:', err);
+} and initialize
 window.updateManager = new UpdateManager();
 window.updateManager.init();
 
