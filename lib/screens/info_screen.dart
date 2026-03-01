@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../build_info.dart';
 import '../services/analytics_service.dart';
-import 'dart:html' as html;
+import 'dart:js' as js;
 
 class InfoScreen extends StatelessWidget {
   const InfoScreen({super.key});
@@ -41,9 +41,17 @@ class InfoScreen extends StatelessWidget {
       );
     }
 
-    // Force hard reload from server (bypasses cache)
+    // Use same update mechanism as update banner
     await Future.delayed(const Duration(milliseconds: 500));
-    html.window.location.reload();
+    js.context.callMethod('eval', [
+      '''
+      if (window.updateManager) { 
+        window.updateManager.applyUpdate(); 
+      } else {
+        window.location.reload();
+      }
+      '''
+    ]);
   }
 
   @override
