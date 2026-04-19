@@ -20,6 +20,7 @@ Eine Progressive Web App (PWA) zur Unterstützung beim Abnehmen – mit lokaler 
 
 ### Features
 
+- ⚡ **Schneller Start**: Assets werden direkt aus dem lokalen Cache geladen – die App startet sofort, auch ohne schnelle Verbindung
 - 📊 **Gewichtsverfolgung**: Verfolge deinen Fortschritt mit grafischer Auswertung und farbiger Trendlinie
 - ⏱️ **Flexible Zeitraumauswahl**: Zeige dein Gewichtsdiagramm für verschiedene Zeiträume an (7 Tage, 14 Tage, 4 Wochen, 3/6 Monate, 1/5/10 Jahre)
 - 🎯 **Zielgewicht anpassen**: Ändere dein Zielgewicht jederzeit, ohne Daten zu verlieren

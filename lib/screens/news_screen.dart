@@ -27,6 +27,17 @@ class _NewsScreenState extends State<NewsScreen> {
         padding: const EdgeInsets.all(16),
         children: [
           _buildNewsSection(
+            'April 2026',
+            [
+              _NewsItem(
+                icon: Icons.rocket_launch,
+                title: 'Schnellerer App-Start',
+                description: 'Die App startet jetzt deutlich schneller: Assets werden direkt aus dem lokalen Cache geladen statt jedes Mal aus dem Netzwerk geholt. Außerdem werden Update-Checks erst nach dem vollständigen Laden gestartet, damit der Start nicht verzögert wird.',
+              ),
+            ],
+          ),
+          const SizedBox(height: 24),
+          _buildNewsSection(
             'Februar 2026',
             [
               _NewsItem(

@@ -33,8 +33,8 @@ description: Minimaler, lokaler Abnehm-Tracker und Heißhunger-Helfer. Keine Clo
     </div>
     
     <div class="feature">
-      <h3>⚡ Sofort einsatzbereit</h3>
-      <p>Starte direkt im Browser – keine Installation, kein App Store, keine Wartezeit.</p>
+      <h3>⚡ Blitzschnell</h3>
+      <p>Die App startet sofort – Assets werden direkt aus dem lokalen Cache geladen, kein Warten auf Netzwerk-Downloads.</p>
     </div>
     
     <div class="feature">

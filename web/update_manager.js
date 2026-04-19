@@ -61,10 +61,10 @@ class UpdateManager {
         this.registration.update();
       }, 60000);
 
-      // Delay first update check to not block app startup (5s delay)
+      // Delay first update check until app is fully loaded and stable (30s)
       setTimeout(() => {
         this.registration.update();
-      }, 5000);
+      }, 30000);
 
     } catch (error) {
       console.error('Service Worker registration failed:', error);

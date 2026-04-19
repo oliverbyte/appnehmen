@@ -112,8 +112,8 @@
     <div class="loading-text" id="loading-text">Wird geladen...</div>
   </div>
   
-  <!-- Update Manager for automatic updates (auto-initializes) -->
-  <script src="update_manager.js"></script>
+  <!-- Update Manager for automatic updates (deferred to not block rendering) -->
+  <script src="update_manager.js" defer></script>
   
   <script src="flutter_bootstrap.js" async></script>
 </body>

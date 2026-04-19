@@ -47,24 +47,34 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Fetch: Network-First strategy with cache fallback
+// Fetch: Cache-First strategy for fast startup
 self.addEventListener('fetch', (event) => {
+  // Only intercept GET requests
+  if (event.request.method !== 'GET') return;
+
   event.respondWith(
-    fetch(event.request)
-      .then((response) => {
-        // Clone response for cache
-        const responseToCache = response.clone();
-        
-        caches.open(CACHE_NAME)
-          .then((cache) => {
-            cache.put(event.request, responseToCache);
-          });
-        
-        return response;
-      })
-      .catch(() => {
-        // Fallback to cache when offline
-        return caches.match(event.request);
+    caches.match(event.request)
+      .then((cachedResponse) => {
+        if (cachedResponse) {
+          // Serve from cache immediately - no network needed
+          return cachedResponse;
+        }
+
+        // Not in cache yet: fetch from network and cache for next time
+        return fetch(event.request)
+          .then((response) => {
+            if (!response || response.status !== 200 || response.type === 'opaque') {
+              return response;
+            }
+
+            const responseToCache = response.clone();
+            caches.open(CACHE_NAME).then((cache) => {
+              cache.put(event.request, responseToCache);
+            });
+
+            return response;
+          })
+          .catch(() => null);
       })
   );
 });
